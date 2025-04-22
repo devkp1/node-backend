@@ -3,21 +3,39 @@
   "version": "1.0.0",
   "description": "Just simple repository.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node index.js"
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "npm run lint",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@eslint/config-array": "0.20.0",
+    "@eslint/js": "9.25.0",
+    "eslint": "9.25.0",
+    "eslint-config-prettier": "10.1.2",
+    "eslint-plugin-prettier": "5.2.6",
+    "globals": "16.0.0",
+    "husky": "9.1.7",
+    "nodemon": "3.1.9",
+    "prettier": "3.5.3"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "mongodb": "^6.15.0",
-    "mongoose": "^8.13.2"
+    "cors": "2.8.5",
+    "dotenv": "16.5.0",
+    "express": "5.1.0",
+    "mongodb": "6.15.0",
+    "mongoose": "8.13.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }
