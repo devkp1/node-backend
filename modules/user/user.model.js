@@ -17,13 +17,13 @@ const userSchema = new Schema(
       type: String,
       required: [true, lastNameRequiredMessage],
     },
-    phoneNumber: {
-      type: String,
-      unique: true,
-    },
     countryCode: {
       type: Number,
       default: 91,
+    },
+    phoneNumber: {
+      type: String,
+      unique: true,
     },
     email: {
       type: String,
