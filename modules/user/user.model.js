@@ -8,6 +8,7 @@ import {
   passwordRequiredMessage,
   phoneNumberUniqueMessge,
 } from '../../constants/errorMessages.js';
+import { Gender } from '../../enums/userEnums.js';
 
 const userSchema = new Schema(
   {
