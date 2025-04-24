@@ -1,4 +1,8 @@
 import express from 'express';
+import fs from 'fs-extra';
+import open from 'open';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { configDotenv } from 'dotenv';
 import { db } from './config/database/databaseConnection.js';
 import winston from 'winston';
@@ -38,6 +42,24 @@ app.get('/', (req, res) => {
 app.use('/api/v1', userRoute);
 
 app.listen(port, () => {
-  db();
-  console.log(`server is running on http://localhost:${port}`);
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
+  const tempFilePath = path.join(__dirname, 'swagger_opened.tmp');
+
+  const server = app.listen(port, () => {
+    db();
+
+    if (!fs.existsSync(tempFilePath)) {
+      open(`http://localhost:${port}/api-docs`);
+      fs.writeFileSync(tempFilePath, 'Swagger UI opened');
+    }
+  });
+
+  process.on('SIGINT', () => {
+    server.close(() => {
+      fs.removeSync(tempFilePath);
+      process.exit();
+    });
+  });
 });
