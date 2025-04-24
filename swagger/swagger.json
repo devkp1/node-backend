@@ -24,7 +24,7 @@
   },
   "paths": {
     "/auth/sign-in": {
-      "post": {
+      "get": {
         "tags": ["signin"],
         "summary": "Sign in User",
         "description": "Sign in User",

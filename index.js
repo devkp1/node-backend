@@ -30,7 +30,7 @@ const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/', (req, res) => {
-  console.log(process.env.ENVIRONMENT);
+  // console.log(process.env.ENVIRONMENT);
   res.send('Hello World!');
 });
 
