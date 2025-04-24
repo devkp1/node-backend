@@ -1,41 +1,49 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+import { UserModelSchema } from '../../constants/modelNameConstants';
+import {
+  emailRequiredMessage,
+  firstNameRequiredMessage,
+  lastNameRequiredMessage,
+  passwordRequiredMessage,
+} from '../../constants/errorMessages';
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     firstName: {
       type: String,
-      require: true,
+      required: [true, firstNameRequiredMessage],
     },
     lastName: {
       type: String,
-      require: true,
+      required: [true, lastNameRequiredMessage],
     },
     phoneNumber: {
-      type: Number,
-      require: true,
+      type: String,
       unique: true,
+    },
+    countryCode: {
+      type: Number,
+      default: 91,
     },
     email: {
       type: String,
-      require: true,
+      required: [true, emailRequiredMessage],
       unqiue: true,
     },
     dateOfBirth: {
       type: Date,
-      require: true,
     },
     password: {
       type: String,
-      require: true,
+      required: [true, passwordRequiredMessage],
     },
     otp: {
-      type: Number,
-      default: 0,
+      type: String,
+      maxlength: 6,
     },
     gender: {
       type: String,
       enum: ['man', 'woman', 'other'],
-      require: true,
     },
     profilePicture: {
       type: String,
@@ -43,35 +51,21 @@ const userSchema = new mongoose.Schema(
     },
     houseNumber: {
       type: String,
-      require: true,
-    },
-    area: {
-      type: String,
-      require: true,
     },
     address: {
       type: String,
-      require: true,
     },
     pincode: {
       type: Number,
-      require: true,
     },
     city: {
       type: String,
-      require: true,
     },
     state: {
       type: String,
-      require: true,
     },
     country: {
       type: String,
-      require: true,
-    },
-    countryCode: {
-      type: Number,
-      require: 91,
     },
     isUserVerified: {
       type: Boolean,
@@ -83,6 +77,6 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model(UserModelSchema, userSchema);
 
 export default User;
