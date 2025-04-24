@@ -8,6 +8,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const swaggerDocument = require('./swagger/swagger.json');
 import logger from './logger.js';
+import { router as userRoute } from './modules/user/user.route.js';
 configDotenv();
 
 const app = express();
@@ -33,6 +34,8 @@ app.get('/', (req, res) => {
   // console.log(process.env.ENVIRONMENT);
   res.send('Hello World!');
 });
+
+app.use('/api/v1', userRoute);
 
 app.listen(port, () => {
   db();
