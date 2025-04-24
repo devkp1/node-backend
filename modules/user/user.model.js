@@ -2,9 +2,11 @@ import mongoose, { Schema } from 'mongoose';
 import { UserModelSchema } from '../../constants/modelNameConstants';
 import {
   emailRequiredMessage,
+  emailUniqueMessage,
   firstNameRequiredMessage,
   lastNameRequiredMessage,
   passwordRequiredMessage,
+  phoneNumberUniqueMessge,
 } from '../../constants/errorMessages';
 
 const userSchema = new Schema(
@@ -23,12 +25,12 @@ const userSchema = new Schema(
     },
     phoneNumber: {
       type: String,
-      unique: true,
+      unique: [true, phoneNumberUniqueMessge],
     },
     email: {
       type: String,
       required: [true, emailRequiredMessage],
-      unqiue: true,
+      unqiue: [true, emailUniqueMessage],
     },
     dateOfBirth: {
       type: Date,
@@ -40,10 +42,12 @@ const userSchema = new Schema(
     otp: {
       type: String,
       maxlength: 6,
+      default: '000000',
     },
     gender: {
       type: String,
       enum: ['man', 'woman', 'other'],
+      default: '',
     },
     profilePicture: {
       type: String,
@@ -51,21 +55,26 @@ const userSchema = new Schema(
     },
     houseNumber: {
       type: String,
+      default: '',
     },
     address: {
       type: String,
     },
     pincode: {
-      type: Number,
+      type: String,
+      default: '',
     },
     city: {
       type: String,
+      default: '',
     },
     state: {
       type: String,
+      default: '',
     },
     country: {
       type: String,
+      default: '',
     },
     isUserVerified: {
       type: Boolean,

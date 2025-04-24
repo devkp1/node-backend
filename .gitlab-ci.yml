@@ -17,7 +17,7 @@
 image: node:18
 
 before_script:
-  - npm install # install all libraries.
+  - npm install # install dependencies.
 
 stages: # List of stages for jobs, and their order of execution
   - build
