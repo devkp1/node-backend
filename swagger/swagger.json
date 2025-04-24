@@ -1,0 +1,55 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "nodebackend",
+    "version": "1.0.0",
+    "description": "API Documentation"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local server"
+    }
+  ],
+  "schemas": ["http"],
+  "host": "localhost:5000",
+  "basePath": "/v1",
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "authorization",
+      "description": "TOKEN THAT NEED TO BE SET IN HEADER WITH 'bearer' KEYWORD"
+    }
+  },
+  "paths": {
+    "/auth/sign-in": {
+      "post": {
+        "tags": ["signin"],
+        "summary": "Sign in User",
+        "description": "Sign in User",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Ener all required fields value",
+            "required": true,
+            "scheme": {
+              "$ref": "#/definitions/signinUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User signin successfully"
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    }
+  }
+}
