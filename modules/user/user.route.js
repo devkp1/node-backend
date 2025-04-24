@@ -1,10 +1,12 @@
 import express from 'express';
-const router = express.Router();
+const userRoute = express.Router();
 
-router.post('/register', (req, res) => {
+userRoute.post('/register', (req, res) => {
   res.send('Register route is working.');
 });
 
-router.get('/sending', (req, res) => res.send('This is sending...'));
+userRoute.get('/sign-in', (req, res) => {
+  res.send('sign-in route is working.');
+});
 
-export { router };
+export default userRoute;
