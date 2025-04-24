@@ -1,5 +1,5 @@
 import { createLogger, format, transports } from 'winston';
-import config from './config/config.js';
+import config from './config/loggerConfig/config.js';
 
 const logger = createLogger({
   level: config.logLevel,
