@@ -7,46 +7,75 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000",
+      "url": "http://localhost:5000/api/v1",
       "description": "Local server"
     }
   ],
-  "schemas": ["http"],
-  "host": "localhost:5000",
-  "basePath": "/v1",
-  "securityDefinitions": {
-    "Authorization": {
-      "type": "apiKey",
-      "in": "header",
-      "name": "authorization",
-      "description": "TOKEN THAT NEED TO BE SET IN HEADER WITH 'bearer' KEYWORD"
+  "components": {
+    "securitySchemes": {
+      "Authorization": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization",
+        "description": "TOKEN THAT NEED TO BE SET IN HEADER WITH 'Bearer' KEYWORD"
+      }
+    }
+  },
+  "schemas": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "description": "User's first name",
+          "example": "John"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "User's last name",
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address",
+          "example": "john.doe@example.com"
+        },
+        "passowrd": {
+          "type": "string",
+          "description": "User's password",
+          "example": "password123"
+        }
+      },
+      "required": ["firstName", "lastName", "email", "password"],
+      "additionalProperties": false
     }
   },
   "paths": {
-    "/auth/sign-in": {
-      "get": {
-        "tags": ["signin"],
-        "summary": "Sign in User",
-        "description": "Sign in User",
-        "produces": ["application/json"],
-        "consumes": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Ener all required fields value",
-            "required": true,
-            "scheme": {
-              "$ref": "#/definitions/signinUser"
+    "/register-user": {
+      "post": {
+        "tags": ["signup"],
+        "summary": "Sign up User",
+        "description": "Sign up User",
+        "requestBody": {
+          "description": "Enter all required fields value",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "User signin successfully"
+            "description": "User signed up successfully"
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Bad Request - Invalid input"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

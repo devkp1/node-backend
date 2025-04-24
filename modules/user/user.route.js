@@ -1,12 +1,7 @@
 import express from 'express';
+import { registerUser } from './user.controller.js';
 const userRoute = express.Router();
 
-userRoute.post('/register', (req, res) => {
-  res.send('Register route is working.');
-});
-
-userRoute.get('/sign-in', (req, res) => {
-  res.send('sign-in route is working.');
-});
+userRoute.route('/register-user').post(registerUser);
 
 export default userRoute;

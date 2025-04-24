@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { UserModelSchema } from '../../constants/modelNameConstants';
+import { UserModelSchema } from '../../constants/modelNameConstants.js';
 import {
   emailRequiredMessage,
   emailUniqueMessage,
@@ -7,7 +7,7 @@ import {
   lastNameRequiredMessage,
   passwordRequiredMessage,
   phoneNumberUniqueMessge,
-} from '../../constants/errorMessages';
+} from '../../constants/errorMessages.js';
 
 const userSchema = new Schema(
   {
