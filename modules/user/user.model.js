@@ -2,7 +2,11 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
   {
-    fullName: {
+    firstName: {
+      type: String,
+      require: true,
+    },
+    lastName: {
       type: String,
       require: true,
     },
@@ -26,7 +30,7 @@ const userSchema = new mongoose.Schema(
     },
     otp: {
       type: Number,
-      default: '',
+      default: 0,
     },
     gender: {
       type: String,
@@ -45,6 +49,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    address: {
+      type: String,
+      require: true,
+    },
     pincode: {
       type: Number,
       require: true,
@@ -60,6 +68,10 @@ const userSchema = new mongoose.Schema(
     country: {
       type: String,
       require: true,
+    },
+    countryCode: {
+      type: Number,
+      require: 91,
     },
     isUserVerified: {
       type: Boolean,
