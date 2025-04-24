@@ -1,5 +1,5 @@
 import express from 'express';
-import dotenv from 'dotenv';
+import { configDotenv } from 'dotenv';
 import { db } from './config/database/databaseConnection.js';
 import winston from 'winston';
 import swaggerUi from 'swagger-ui-express';
@@ -8,7 +8,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const swaggerDocument = require('./swagger/swagger.json');
 import logger from './logger.js';
-dotenv.config();
+configDotenv();
 
 const app = express();
 const port = 5000;
@@ -23,7 +23,7 @@ logger.add(
 // swagger config.
 const swaggerOptions = {
   swaggerDefinition: swaggerDocument,
-  apis: ['./routes/*.js'], // Path to the API docs
+  apis: ['./routes/*.js'],
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
