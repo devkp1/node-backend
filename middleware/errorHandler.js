@@ -1,3 +1,11 @@
+import {
+  ForbiddenErrorMessage,
+  NotFoundErrorMessage,
+  ServerErrorMessage,
+  UnauthroizedErrorMessage,
+  ValidationErrorMessage,
+} from '../constants/errorMessages.js';
+import { errorResponse } from '../utils/responseHandler.js';
 import { statusCodes } from '../constants/statusCodeMessages.js';
 import logger from '../logger.js';
 const { VALIDATION_ERROR, UNAUTHORIZED, SERVER_ERROR, FORBIDDEN, NOT_FOUND } =
@@ -15,48 +23,48 @@ export const errorHandler = (err, req, res, next) => {
   // switch case for handling errors case.
   switch (statusCode) {
     case VALIDATION_ERROR:
-      res.json({
-        status: false,
-        title: 'Validation failed',
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      errorResponse(
+        res,
+        err.message,
+        ValidationErrorMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
       break;
 
     case NOT_FOUND:
-      res.json({
-        status: false,
-        title: 'Not Found!',
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      errorResponse(
+        res,
+        err.message,
+        NotFoundErrorMessage,
+        statusCodes.NOT_FOUND,
+      );
       break;
 
     case UNAUTHORIZED:
-      res.json({
-        status: false,
-        title: 'Unauthorized!',
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      errorResponse(
+        res,
+        err.message,
+        UnauthroizedErrorMessage,
+        statusCodes.UNAUTHORIZED,
+      );
       break;
 
     case FORBIDDEN:
-      res.json({
-        status: false,
-        title: 'Forbidden',
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      errorResponse(
+        res,
+        err.message,
+        ForbiddenErrorMessage,
+        statusCodes.FORBIDDEN,
+      );
       break;
 
     case SERVER_ERROR:
-      res.json({
-        status: false,
-        title: 'Internal Server Error',
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      errorResponse(
+        res,
+        err.message,
+        ServerErrorMessage,
+        statusCodes.SERVER_ERROR,
+      );
       break;
 
     default:

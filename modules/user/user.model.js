@@ -8,7 +8,7 @@ import {
   passwordRequiredMessage,
   phoneNumberUniqueMessge,
 } from '../../constants/errorMessages.js';
-import { Gender } from '../../enums/userEnums.js';
+import { Gender } from '../../enums/userEnum.js';
 
 const userSchema = new Schema(
   {
@@ -47,7 +47,7 @@ const userSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ['man', 'woman', 'other'],
+      enum: Gender,
     },
     profilePicture: {
       type: String,

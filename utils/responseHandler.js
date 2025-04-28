@@ -1,4 +1,4 @@
-import { errorMessage, successMessage } from '../constants/resonseMessages.js';
+import { errorMessage, successMessage } from '../constants/responseMessages.js';
 import { statusCodes } from '../constants/statusCodeMessages.js';
 
 const successResponse = (
@@ -8,7 +8,7 @@ const successResponse = (
   statusCode = statusCodes.SUCCESS,
 ) => {
   res.status(statusCode).json({
-    success: true,
+    status: true,
     message,
     data,
   });
@@ -21,7 +21,7 @@ const errorResponse = (
   statusCode = statusCodes.SERVER_ERROR,
 ) => {
   res.status(statusCode).json({
-    success: false,
+    status: false,
     message,
     error: error.message || error,
   });

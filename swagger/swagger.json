@@ -52,6 +52,23 @@
       },
       "required": ["firstName", "lastName", "email", "password"],
       "additionalProperties": false
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "User's email address",
+          "example": "john.doe@example.com"
+        },
+        "passowrd": {
+          "type": "string",
+          "description": "User's password",
+          "example": "password@123"
+        }
+      },
+      "required": ["email", "password"],
+      "additionalProperties": false
     }
   },
   "paths": {
@@ -77,6 +94,38 @@
           },
           "400": {
             "description": "Bad Request - Invalid input"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/signin": {
+      "post": {
+        "tags": ["login"],
+        "summary": "Log in User",
+        "description": "Login in User",
+        "requestBody": {
+          "description": "Enter email and password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad Request - Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid credentials"
           },
           "500": {
             "description": "Internal Server Error"
