@@ -2,7 +2,10 @@ import userModel from './user.model.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { successResponse, errorResponse } from '../../utils/responseHandler.js';
-import { getHashPassword } from '../../utils/password.utils.js';
+import {
+  getHashPassword,
+  comparePassword,
+} from '../../utils/password.utils.js';
 import { userValidations } from '../../validators/user.validation.js';
 import {
   EmailAndPasswordRequiredMessage,
@@ -20,6 +23,7 @@ import {
 } from '../../constants/responseMessages.js';
 import { statusCodes } from '../../constants/statusCodeMessages.js';
 import { validateInput } from '../../common/validation.js';
+import { generateAccessToken } from '../../utils/tokenGenerator.js';
 import logger from '../../logger.js';
 
 export const registerUser = async (req, res) => {
@@ -94,7 +98,7 @@ export const loginUser = async (req, res) => {
       );
     }
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = await comparePassword(password, user.password);
 
     if (!isPasswordMatch) {
       return errorResponse(
@@ -105,11 +109,7 @@ export const loginUser = async (req, res) => {
       );
     }
 
-    const accessToken = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.SECRET_TOKEN,
-      { expiresIn: '12h' },
-    );
+    const accessToken = generateAccessToken(user);
 
     return successResponse(
       res,
