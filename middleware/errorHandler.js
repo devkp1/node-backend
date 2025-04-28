@@ -1,10 +1,11 @@
-const { constants } = require('../constants/constant.js');
-const logger = require('../logger.js');
+import { statusCodes } from '../constants/statusCodeMessages.js';
+import logger from '../logger.js';
 const { VALIDATION_ERROR, UNAUTHORIZED, SERVER_ERROR, FORBIDDEN, NOT_FOUND } =
-  constants;
+  statusCodes;
 
-const errorHandler = (err, req, res) => {
+export const errorHandler = (err, req, res) => {
   const statusCode = req.statusCode || 500;
+  logger.error(`${err.message} - ${req.method} ${req.url} - ${req.ip}`);
   logger.log({
     level: 'error',
     status: statusCode,
@@ -67,5 +68,3 @@ const errorHandler = (err, req, res) => {
       });
   }
 };
-
-module.exports = { errorHandler };

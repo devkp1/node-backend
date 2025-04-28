@@ -1,10 +1,9 @@
 import userModel from './user.model.js';
 import { getHashPassword } from '../../utils/password.utils.js';
 import { userValidations } from '../../validators/user.validation.js';
-import { joiValidationMessage } from '../../constants/errorMessages.js';
 import { userRegisterMessage } from '../../constants/responseMessages.js';
 
-export const registerUser = async (req, res) => {
+export const registerUser = async (req, res, next) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
@@ -16,11 +15,8 @@ export const registerUser = async (req, res) => {
     });
 
     if (error) {
-      return res.status(500).json({
-        status: false,
-        message: joiValidationMessage,
-        errors: error,
-      });
+      res.status(400);
+      return next(error);
     }
 
     const hashedPassword = await getHashPassword(password);
@@ -38,9 +34,6 @@ export const registerUser = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    return res.status(500).json({
-      status: false,
-      message: error.message,
-    });
+    next(error);
   }
 };

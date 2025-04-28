@@ -9,6 +9,10 @@
     {
       "url": "http://localhost:5000/api/v1",
       "description": "Local server"
+    },
+    {
+      "url": "http://test-server.com/api/v1",
+      "description": "Test server"
     }
   ],
   "components": {

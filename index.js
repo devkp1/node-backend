@@ -5,6 +5,7 @@ import { db } from './config/database/databaseConnection.js';
 import logger from './logger.js';
 import userRoute from './modules/user/user.route.js';
 configDotenv();
+import { errorHandler } from './middleware/errorHandler.js';
 import { setUpLogger } from './config/initial/setupLogging.js';
 import { setupGracefulShutdown } from './config/initial/shutdown.js';
 import { setupSwagger } from './config/initial/swagger.js';
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1', userRoute);
+app.use(errorHandler);
 
 const server = app.listen(port, () => {
   db();
