@@ -6,3 +6,4 @@ export const emailUniqueMessage = 'Email already exists.';
 export const emailValidationMessage = 'Please enter a valid email address.';
 export const strongPasswordValidationMessage =
   'Password must be 8-20 characters long, include at least one upppercase letter, one lowercase letter, one digit, and one special character.';
+export const joiValidationMessage = 'Wrong validation.';

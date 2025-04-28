@@ -1,6 +1,7 @@
 import userModel from './user.model.js';
 import { getHashPassword } from '../../utils/password.utils.js';
 import { userValidations } from '../../validators/user.validation.js';
+import { joiValidationMessage } from '../../constants/errorMessages.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -16,7 +17,7 @@ export const registerUser = async (req, res) => {
     if (error) {
       return res.status(500).json({
         status: false,
-        message: 'Wrong Validators',
+        message: joiValidationMessage,
         errors: error,
       });
     }
