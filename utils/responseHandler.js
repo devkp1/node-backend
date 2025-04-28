@@ -1,6 +1,12 @@
-const { SERVER_ERROR } = require('../constants/statusCodeMessages.js');
+import { errorMessage, successMessage } from '../constants/resonseMessages.js';
+import { statusCodes } from '../constants/statusCodeMessages.js';
 
-const successResponse = (res, data, message = 'Success', statusCode = 200) => {
+const successResponse = (
+  res,
+  data,
+  message = successMessage,
+  statusCode = statusCodes.SUCCESS,
+) => {
   res.status(statusCode).json({
     success: true,
     message,
@@ -11,8 +17,8 @@ const successResponse = (res, data, message = 'Success', statusCode = 200) => {
 const errorResponse = (
   res,
   error,
-  message = 'An error occured',
-  statusCode = SERVER_ERROR,
+  message = errorMessage,
+  statusCode = statusCodes.SERVER_ERROR,
 ) => {
   res.status(statusCode).json({
     success: false,
@@ -21,7 +27,4 @@ const errorResponse = (
   });
 };
 
-module.exports = {
-  successResponse,
-  errorResponse,
-};
+export { successResponse, errorResponse };
