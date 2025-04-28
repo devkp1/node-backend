@@ -3,7 +3,7 @@ import logger from '../logger.js';
 const { VALIDATION_ERROR, UNAUTHORIZED, SERVER_ERROR, FORBIDDEN, NOT_FOUND } =
   statusCodes;
 
-export const errorHandler = (err, req, res) => {
+export const errorHandler = (err, req, res, next) => {
   const statusCode = req.statusCode || 500;
   logger.error(`${err.message} - ${req.method} ${req.url} - ${req.ip}`);
   logger.log({
@@ -66,5 +66,6 @@ export const errorHandler = (err, req, res) => {
         message: err.message,
         stackTrace: err.stack,
       });
+      next();
   }
 };
