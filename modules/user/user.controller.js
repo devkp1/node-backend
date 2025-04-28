@@ -1,5 +1,5 @@
 import userModel from './user.model.js';
-import { hashPassword } from '../../utils/password.utils.js';
+import { getHashPassword } from '../../utils/password.utils.js';
 import { userValidations } from '../../validators/user.validation.js';
 
 export const registerUser = async (req, res) => {
@@ -21,7 +21,7 @@ export const registerUser = async (req, res) => {
       });
     }
 
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await getHashPassword(password);
 
     const user = await userModel.create({
       firstName,

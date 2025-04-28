@@ -7,10 +7,7 @@ import {
   passwordRequiredMessage,
   strongPasswordValidationMessage,
 } from '../constants/errorMessages.js';
-
-const emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,}$/;
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=[\]{};:'",.<>?]).{8,20}$/;
+import { emailRegex, passwordRegex } from '../constants/regexConstants.js';
 
 export const userValidations = Joi.object({
   firstName: Joi.string().min(3).max(20).required(firstNameRequiredMessage),
