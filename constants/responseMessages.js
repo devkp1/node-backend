@@ -1,3 +1,4 @@
 export const successMessage = 'Success';
-export const errorMessage = 'An error occurred.';
-export const userRegisterMessage = 'User register successfully';
+export const errorMessage = 'An error occurred';
+export const userRegisterMessage = 'Register successfully';
+export const userLoginMessage = 'Login successful';

@@ -18,3 +18,5 @@ export const EmailAndPasswordRequiredMessage =
   'Email and password are required.';
 export const UserNotFoundMessage = 'User not found.';
 export const phoneNumberUniqueMessge = 'Phone Number should be unique.';
+export const TokenErrorMessage = 'Please login to access this resource.';
+export const InvalidTokenErrorMessage = 'Invlaid Token.';

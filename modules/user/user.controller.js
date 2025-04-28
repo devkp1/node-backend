@@ -9,8 +9,14 @@ import {
   EmailPasswordMatchMessage,
   ServerErrorMessage,
   UserNotFoundMessage,
+  NotFoundErrorMessage,
+  UnauthroizedErrorMessage,
+  ValidationErrorMessage,
 } from '../../constants/errorMessages.js';
-import { userRegisterMessage } from '../../constants/responseMessages.js';
+import {
+  userRegisterMessage,
+  userLoginMessage,
+} from '../../constants/responseMessages.js';
 import { statusCodes } from '../../constants/statusCodeMessages.js';
 import logger from '../../logger.js';
 
@@ -56,7 +62,7 @@ export const loginUser = async (req, res) => {
     if (!email || !password) {
       return errorResponse(
         res,
-        new Error(EmailAndPasswordRequiredMessage),
+        new Error(ValidationErrorMessage),
         EmailAndPasswordRequiredMessage,
         statusCodes.VALIDATION_ERROR,
       );
@@ -67,7 +73,7 @@ export const loginUser = async (req, res) => {
     if (!user) {
       return errorResponse(
         res,
-        new Error(UserNotFoundMessage),
+        new Error(NotFoundErrorMessage),
         UserNotFoundMessage,
         statusCodes.NOT_FOUND,
       );
@@ -78,7 +84,7 @@ export const loginUser = async (req, res) => {
     if (!isPasswordMatch) {
       return errorResponse(
         res,
-        new Error(EmailPasswordMatchMessage),
+        new Error(UnauthroizedErrorMessage),
         EmailPasswordMatchMessage,
         statusCodes.UNAUTHORIZED,
       );
@@ -93,7 +99,7 @@ export const loginUser = async (req, res) => {
     return successResponse(
       res,
       { accessToken },
-      'Login Successful',
+      userLoginMessage,
       statusCodes.SUCCESS,
     );
   } catch (error) {

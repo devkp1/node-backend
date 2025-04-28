@@ -1,17 +1,28 @@
-import jwt from 'jwt';
-import logger from '../logger';
+import jwt from 'jsonwebtoken';
+import logger from '../logger.js';
 import dotenv from 'dotenv';
+import {
+  ForbiddenErrorMessage,
+  InvalidTokenErrorMessage,
+  TokenErrorMessage,
+  ValidationErrorMessage,
+} from '../constants/errorMessages.js';
+import { errorResponse } from '../utils/responseHandler.js';
+import { statusCodes } from '../constants/statusCodeMessages.js';
 dotenv.config();
 
-export const iaAuthenticateUser = async (req, res, next) => {
+// middleware for verify jwt token.
+export const isAuthenticateUser = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
     if (!token) {
-      return res.status(403).send({
-        success: false,
-        message: 'Please login to access this response.',
-      });
+      return errorResponse(
+        res,
+        new Error(ForbiddenErrorMessage),
+        TokenErrorMessage,
+        statusCodes.FORBIDDEN,
+      );
     }
 
     try {
@@ -24,10 +35,12 @@ export const iaAuthenticateUser = async (req, res, next) => {
       next();
     } catch (error) {
       logger.error(`Login error: ${error.message}`);
-      return res.status(400).send({
-        success: false,
-        message: 'Invalid token',
-      });
+      return errorResponse(
+        res,
+        new Error(ValidationErrorMessage),
+        InvalidTokenErrorMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
     }
   } catch (error) {
     next(error);
