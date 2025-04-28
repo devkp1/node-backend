@@ -4,7 +4,10 @@ import {
   getHashPassword,
   comparePassword,
 } from '../../utils/password.utils.js';
-import { userValidations } from '../../validators/user.validation.js';
+import {
+  userValidations,
+  loginValidations,
+} from '../../validators/user.validation.js';
 import {
   EmailAndPasswordRequiredMessage,
   EmailPasswordMatchMessage,
@@ -75,6 +78,10 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    const isValid = validateInput(loginValidations, { email, password }, res);
+
+    if (!isValid) return;
 
     if (!email || !password) {
       return errorResponse(

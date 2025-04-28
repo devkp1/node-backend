@@ -24,3 +24,13 @@ export const userValidations = Joi.object({
       'any.required': passwordRequiredMessage,
     }),
 });
+
+export const loginValidations = Joi.object({
+  email: Joi.string().pattern(new RegExp(emailRegex)).required().messages({
+    'string.pattern.base': emailValidationMessage,
+    'any.required': emailRequiredMessage,
+  }),
+  password: Joi.string().required().messages({
+    'any.required': passwordRequiredMessage,
+  }),
+});
