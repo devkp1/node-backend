@@ -2,6 +2,7 @@ import userModel from './user.model.js';
 import { getHashPassword } from '../../utils/password.utils.js';
 import { userValidations } from '../../validators/user.validation.js';
 import { joiValidationMessage } from '../../constants/errorMessages.js';
+import { userRegisterMessage } from '../../constants/responseMessages.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -33,7 +34,7 @@ export const registerUser = async (req, res) => {
 
     return res.status(200).json({
       status: true,
-      message: 'User register successfully',
+      message: userRegisterMessage,
       data: user,
     });
   } catch (error) {
