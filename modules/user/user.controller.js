@@ -16,12 +16,13 @@ export const registerUser = async (req, res) => {
 
     return res.status(200).json({
       status: true,
-      user,
+      message: 'User register successfully',
+      data: user,
     });
   } catch (error) {
     return res.status(500).json({
       status: false,
-      message: 'Internal server error',
+      message: error.message,
     });
   }
 };
