@@ -5,7 +5,7 @@ import { db } from './config/database/databaseConnection.js';
 import logger from './logger.js';
 import userRoute from './modules/user/user.route.js';
 configDotenv();
-import { setupLogging } from './config/initial/setupLogging.js';
+import { setUpLogger } from './config/initial/setupLogging.js';
 import { setupGracefulShutdown } from './config/initial/shutdown.js';
 import { setupSwagger } from './config/initial/swagger.js';
 
@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use(cors());
 
-setupLogging(logger);
+setUpLogger(logger);
 setupSwagger(app);
 
 app.get('/', (req, res) => {
