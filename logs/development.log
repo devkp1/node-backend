@@ -2,3 +2,4 @@
 2025-04-28T10:37:49.985Z [31merror[39m: Cannot destructure property 'firstName' of 'req.body' as it is undefined. 
 2025-04-28T10:39:35.240Z [31merror[39m: "password" with value "devkp@123" fails to match the required pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=[\]{};:'",.<>?]).{8,20}$/ - POST /api/v1/register-user - ::1 
 2025-04-28T10:39:35.241Z [31merror[39m: "password" with value "devkp@123" fails to match the required pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=[\]{};:'",.<>?]).{8,20}$/ 
+2025-04-28T11:11:52.150Z [31merror[39m: Login error: Cannot destructure property 'email' of 'req.body' as it is undefined. 

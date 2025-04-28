@@ -12,29 +12,32 @@ import {
   NotFoundErrorMessage,
   UnauthroizedErrorMessage,
   ValidationErrorMessage,
+  emailUniqueMessage,
 } from '../../constants/errorMessages.js';
 import {
   userRegisterMessage,
   userLoginMessage,
 } from '../../constants/responseMessages.js';
 import { statusCodes } from '../../constants/statusCodeMessages.js';
+import { validateInput } from '../../common/validation.js';
 import logger from '../../logger.js';
 
-export const registerUser = async (req, res, next) => {
+export const registerUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
-    const { error } = userValidations.validate({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+    const isValid = validateInput(
+      userValidations,
+      {
+        firstName,
+        lastName,
+        email,
+        password,
+      },
+      res,
+    );
 
-    if (error) {
-      res.status(400);
-      return next(error);
-    }
+    if (!isValid) return;
 
     const hashedPassword = await getHashPassword(password);
 
@@ -45,13 +48,25 @@ export const registerUser = async (req, res, next) => {
       password: hashedPassword,
     });
 
-    return res.status(200).json({
-      status: true,
-      message: userRegisterMessage,
-      data: user,
-    });
+    return successResponse(res, user, userRegisterMessage, statusCodes.SUCCESS);
   } catch (error) {
-    next(error);
+    if (error.code === 11000 && error.keyValue.email) {
+      logger.error(`Registration error: ${emailUniqueMessage}`);
+      return errorResponse(
+        res,
+        new Error(ValidationErrorMessage),
+        emailUniqueMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
+
+    logger.error(`Registration error: ${error.message}`);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
   }
 };
 
