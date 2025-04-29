@@ -3,8 +3,7 @@ import { UserModelSchema } from '../../constants/modelNameConstants.js';
 import {
   emailRequiredMessage,
   emailUniqueMessage,
-  firstNameRequiredMessage,
-  lastNameRequiredMessage,
+  fullNameRequiredMessage,
   passwordRequiredMessage,
   phoneNumberUniqueMessge,
 } from '../../constants/errorMessages.js';
@@ -12,13 +11,8 @@ import { Gender } from '../../enums/userEnum.js';
 
 const userSchema = new Schema(
   {
-    firstName: {
-      type: String,
-      required: [true, firstNameRequiredMessage],
-    },
-    lastName: {
-      type: String,
-      required: [true, lastNameRequiredMessage],
+    fullName: {
+      required: [true, fullNameRequiredMessage],
     },
     countryCode: {
       type: Number,

@@ -29,13 +29,12 @@ import logger from '../../logger.js';
 
 export const registerUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { fullName, email, password } = req.body;
 
     const isValid = validateInput(
       userValidations,
       {
-        firstName,
-        lastName,
+        fullName,
         email,
         password,
       },
@@ -47,8 +46,7 @@ export const registerUser = async (req, res) => {
     const hashedPassword = await getHashPassword(password);
 
     const user = await userModel.create({
-      firstName,
-      lastName,
+      fullName,
       email,
       password: hashedPassword,
     });

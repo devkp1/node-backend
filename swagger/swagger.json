@@ -29,15 +29,10 @@
     "User": {
       "type": "object",
       "properties": {
-        "firstName": {
+        "fullName": {
           "type": "string",
-          "description": "User's first name",
-          "example": "John"
-        },
-        "lastName": {
-          "type": "string",
-          "description": "User's last name",
-          "example": "Doe"
+          "description": "User's full name",
+          "example": "John Doe"
         },
         "email": {
           "type": "string",
@@ -47,10 +42,10 @@
         "passowrd": {
           "type": "string",
           "description": "User's password",
-          "example": "password123"
+          "example": "Password@123"
         }
       },
-      "required": ["firstName", "lastName", "email", "password"],
+      "required": ["fullName", "email", "password"],
       "additionalProperties": false
     },
     "Login": {
