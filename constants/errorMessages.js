@@ -19,3 +19,5 @@ export const UserNotFoundMessage = 'User not found.';
 export const phoneNumberUniqueMessge = 'Phone Number should be unique.';
 export const TokenErrorMessage = 'Please login to access this resource.';
 export const InvalidTokenErrorMessage = 'Invlaid Token.';
+export const AdditionalFeildsErrorMessage =
+  'Additional fields are not allowed.';

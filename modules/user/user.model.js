@@ -12,6 +12,7 @@ import { Gender } from '../../enums/userEnum.js';
 const userSchema = new Schema(
   {
     fullName: {
+      type: String,
       required: [true, fullNameRequiredMessage],
     },
     countryCode: {

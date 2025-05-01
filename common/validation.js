@@ -1,6 +1,6 @@
-import { errorResponse } from '../utils/responseHandler';
-import { ValidationErrorMessage } from '../constants/errorMessages';
-import { statusCodes } from '../constants/statusCodeMessages';
+import { errorResponse } from '../utils/responseHandler.js';
+import { ValidationErrorMessage } from '../constants/errorMessages.js';
+import { statusCodes } from '../constants/statusCodeMessages.js';
 
 export const validateInput = (schema, data, res) => {
   const { error } = schema.validate(data);

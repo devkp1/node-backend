@@ -26,10 +26,14 @@ import { statusCodes } from '../../constants/statusCodeMessages.js';
 import { validateInput } from '../../common/validation.js';
 import { generateAccessToken } from '../../utils/tokenGenerator.js';
 import logger from '../../logger.js';
+import { checkAllowedFields } from '../../utils/checkAllowedFeilds.js';
 
 export const registerUser = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
+
+    const allowedFields = ['fullName', 'email', 'password'];
+    if (!checkAllowedFields(allowedFields, req.body, res)) return;
 
     const isValid = validateInput(
       userValidations,
@@ -76,6 +80,9 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    const allowedFields = ['email', 'password'];
+    if (!checkAllowedFields(allowedFields, req.body, res)) return;
 
     const isValid = validateInput(loginValidations, { email, password }, res);
 
