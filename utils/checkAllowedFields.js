@@ -6,7 +6,6 @@ export const checkAllowedFields = (allowedFields, reqBody, res) => {
   const extraFields = Object.keys(reqBody).filter(
     (field) => !allowedFields.includes(field),
   );
-
   if (extraFields.length > 0) {
     errorResponse(
       res,
@@ -16,5 +15,5 @@ export const checkAllowedFields = (allowedFields, reqBody, res) => {
     );
     return false;
   }
-  return false;
+  return true;
 };
