@@ -3,3 +3,10 @@
 2025-04-28T10:39:35.240Z [31merror[39m: "password" with value "devkp@123" fails to match the required pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=[\]{};:'",.<>?]).{8,20}$/ - POST /api/v1/register-user - ::1 
 2025-04-28T10:39:35.241Z [31merror[39m: "password" with value "devkp@123" fails to match the required pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=[\]{};:'",.<>?]).{8,20}$/ 
 2025-04-28T11:11:52.150Z [31merror[39m: Login error: Cannot destructure property 'email' of 'req.body' as it is undefined. 
+2025-05-01T06:29:42.742Z [31merror[39m: Registration error: Phone Number should be unique. 
+2025-05-01T06:30:42.346Z [31merror[39m: Registration error: Phone Number should be unique. 
+2025-05-01T06:43:46.390Z [31merror[39m: Registration error: Phone Number should be unique. 
+2025-05-01T06:48:58.050Z [31merror[39m: Registration error: E11000 duplicate key error collection: test.users index: phoneNumber_1 dup key: { phoneNumber: null } 
+2025-05-01T06:51:24.929Z [31merror[39m: Registration error: Phone Number should be unique. 
+2025-05-01T06:54:14.768Z [31merror[39m: Registration error: Phone Number should be unique. 
+2025-05-05T09:04:28.492Z [31merror[39m: Registration error: Phone Number should be unique. 

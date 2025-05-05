@@ -26,7 +26,7 @@ import { statusCodes } from '../../constants/statusCodeMessages.js';
 import { validateInput } from '../../common/validation.js';
 import { generateAccessToken } from '../../utils/tokenGenerator.js';
 import logger from '../../logger.js';
-import { checkAllowedFields } from '../../utils/checkAllowedFeilds.js';
+import { checkAllowedFields } from '../../utils/checkAllowedFields.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -49,13 +49,23 @@ export const registerUser = async (req, res) => {
 
     const hashedPassword = await getHashPassword(password);
 
-    const user = await userModel.create({
+    const newUser = await userModel.create({
       fullName,
       email,
       password: hashedPassword,
     });
 
-    return successResponse(res, user, userRegisterMessage, statusCodes.SUCCESS);
+    const user = await userModel
+      .findById(newUser._id, 'fullName email password createdAt updatedAt')
+      .exec();
+    const accessToken = generateAccessToken(user);
+
+    return successResponse(
+      res,
+      { user, accessToken },
+      userRegisterMessage,
+      statusCodes.SUCCESS,
+    );
   } catch (error) {
     if (error.code === 11000 && error.keyValue.email) {
       logger.error(`Registration error: ${emailUniqueMessage}`);

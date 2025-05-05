@@ -6,11 +6,13 @@ const successResponse = (
   data,
   message = successMessage,
   statusCode = statusCodes.SUCCESS,
+  token,
 ) => {
   res.status(statusCode).json({
     status: true,
     message,
     data,
+    token,
   });
 };
 
