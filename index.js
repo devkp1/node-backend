@@ -33,6 +33,7 @@ app.use(errorHandler);
 
 const server = app.listen(port, () => {
   db();
+  console.log(`Server Started at ${port}`);
 });
 
 setupGracefulShutdown(server);
