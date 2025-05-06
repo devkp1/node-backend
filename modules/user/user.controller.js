@@ -161,3 +161,52 @@ export const loginUser = async (req, res, next) => {
     );
   }
 };
+
+export const updateUserGenderDob = async (req, res) => {
+  try {
+    const { gender, dob, houseNumber, address, pincode, city, state, country } =
+      req.body;
+    const userId = req.usre.id;
+    const allowedFields = [
+      'gender',
+      'dob',
+      'houseNumber',
+      'address',
+      'pincode',
+      'city',
+      'state',
+      'country',
+    ];
+
+    if (!validateAllowedFields(allowedFields, req.body, res)) return;
+
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return errorResponse(
+        res,
+        new Error(UserNotFoundMessage),
+        UserNotFoundMessage,
+        statusCodes.NOT_FOUND,
+      );
+    }
+
+    user.gender = gender;
+    user.dob = dob;
+    user.houseNumber = houseNumber;
+    user.pincode = pincode;
+    user.city = city;
+    user.state = state;
+    user.country = country;
+    await user.save();
+
+    return successResponse(res, user, userRegisterMessage, statusCodes.SUCCESS);
+  } catch (error) {
+    logger.error('updateUserGenderDob error..........', error.message);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};

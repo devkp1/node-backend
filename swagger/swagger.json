@@ -64,6 +64,62 @@
       },
       "required": ["email", "password"],
       "additionalProperties": false
+    },
+    "UpdateUserDetails": {
+      "type": "object",
+      "properties": {
+        "gender": {
+          "type": "string",
+          "description": "User's gender",
+          "example": "Man"
+        },
+        "dob": {
+          "type": "string",
+          "description": "User's data of birth",
+          "format": "date",
+          "example": "2000-01-01"
+        },
+        "houseNumber": {
+          "type": "string",
+          "description": "User's house number",
+          "example": "1234"
+        },
+        "address": {
+          "type": "string",
+          "description": "User's address",
+          "example": "123 Main st."
+        },
+        "pincode": {
+          "type": "string",
+          "description": "User's pincode",
+          "example": "123 Main st."
+        },
+        "city": {
+          "type": "string",
+          "description": "User's city",
+          "example": "Anytown"
+        },
+        "state": {
+          "type": "string",
+          "description": "User's state",
+          "example": "Anystate"
+        },
+        "country": {
+          "type": "string",
+          "description": "User's country",
+          "example": "Anyland"
+        }
+      },
+      "required": [
+        "gender",
+        "dob",
+        "houseNumber",
+        "pincode",
+        "city",
+        "state",
+        "country"
+      ],
+      "additionalProperties": false
     }
   },
   "paths": {
@@ -126,6 +182,43 @@
             "description": "Internal Server Error"
           }
         }
+      }
+    },
+    "/update-gender-dob": {
+      "put": {
+        "tags": ["user"],
+        "summary": "Update User Gender, Date of Birth, and Address",
+        "description": "Update User's Gender, Date of Birth, and Address.",
+        "requestbody": {
+          "description": "Enter gender, date of birth, and address details.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDetails"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User's information updated successfully"
+          },
+          "400": {
+            "description": "Bad Request - Invalid input"
+          },
+          "404": {
+            "description": "Not Found - User not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     }
   }
