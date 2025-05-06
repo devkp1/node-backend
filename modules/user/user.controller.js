@@ -60,6 +60,9 @@ export const registerUser = async (req, res) => {
       .exec();
     const accessToken = generateAccessToken(user);
 
+    console.log('res.........', res);
+    console.log('user.........', user);
+    console.log('accessToken.........', accessToken);
     return successResponse(
       res,
       { user, accessToken },
@@ -133,7 +136,7 @@ export const loginUser = async (req, res) => {
 
     return successResponse(
       res,
-      { accessToken },
+      { _id: user._id, accessToken },
       userLoginMessage,
       statusCodes.SUCCESS,
     );
