@@ -2,18 +2,21 @@ import { AdditionalFeildsErrorMessage } from '../constants/errorMessages.js';
 import { statusCodes } from '../constants/statusCodeMessages.js';
 import { errorResponse } from './responseHandler.js';
 
-export const checkAllowedFields = (allowedFields, reqBody, res) => {
-  const extraFields = Object.keys(reqBody).filter(
-    (field) => !allowedFields.includes(field),
+const validateAllowedFields = (allowedFields, obj, res) => {
+  const invalidFields = Object.keys(obj).filter(
+    (key) => !allowedFields.includes(key),
   );
-  if (extraFields.length > 0) {
+
+  if (invalidFields.length > 0) {
     errorResponse(
       res,
       new Error(AdditionalFeildsErrorMessage),
-      `These fields are not allowed: ${extraFields.join(', ')}`,
+      `These fields are not allowed: ${invalidFields.join(', ')}`,
       statusCodes.VALIDATION_ERROR,
     );
     return false;
   }
   return true;
 };
+
+export default validateAllowedFields;

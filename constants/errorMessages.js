@@ -21,3 +21,4 @@ export const TokenErrorMessage = 'Please login to access this resource.';
 export const InvalidTokenErrorMessage = 'Invlaid Token.';
 export const AdditionalFeildsErrorMessage =
   'Additional fields are not allowed.';
+export const DuplicateFieldsErrorMessage = 'This field is already exists.';
