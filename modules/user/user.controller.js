@@ -55,9 +55,20 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
-    const user = await userModel
-      .findById(newUser._id, 'fullName email password createdAt updatedAt')
-      .exec();
+    const user = await userModel.findById(
+      newUser._id,
+      'fullName email password createdAt updatedAt',
+    );
+
+    const { _id, createdAt, updatedAt } = newUser;
+    const updatedUser = {
+      id: _id,
+      fullName,
+      email,
+      createdAt,
+      updatedAt,
+    };
+
     const accessToken = generateAccessToken(user);
 
     console.log('res.........', res);
@@ -65,7 +76,7 @@ export const registerUser = async (req, res) => {
     console.log('accessToken.........', accessToken);
     return successResponse(
       res,
-      { user, accessToken },
+      { user: updatedUser, accessToken },
       userRegisterMessage,
       statusCodes.SUCCESS,
     );
@@ -136,7 +147,7 @@ export const loginUser = async (req, res) => {
 
     return successResponse(
       res,
-      { _id: user._id, accessToken },
+      { id: user._id, accessToken },
       userLoginMessage,
       statusCodes.SUCCESS,
     );

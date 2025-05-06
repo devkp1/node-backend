@@ -22,7 +22,6 @@ const userSchema = new Schema(
     phoneNumber: {
       type: String,
       unique: [true, phoneNumberUniqueMessge],
-      default: '8989898998',
     },
     email: {
       type: String,
