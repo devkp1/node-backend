@@ -4,13 +4,22 @@ import dotenv from 'dotenv';
 import {
   InvalidTokenErrorMessage,
   ValidationErrorMessage,
-} from '../constants/errorMessages';
-import { errorResponse } from '../utils/responseHandler';
-import { statusCodes } from '../constants/statusCodeMessages';
+} from '../constants/errorMessages.js';
+import { errorResponse } from '../utils/responseHandler.js';
+import { statusCodes } from '../constants/statusCodeMessages.js';
 dotenv.config();
 
 export const verifyToken = (req, res, next) => {
   const token = req.token;
+
+  if (!token) {
+    return errorResponse(
+      res,
+      new Error(ValidationErrorMessage),
+      InvalidTokenErrorMessage,
+      statusCodes.VALIDATION_ERROR,
+    );
+  }
 
   try {
     const decodeData = jwt.verify(token, process.env.SECRET_TOKEN);

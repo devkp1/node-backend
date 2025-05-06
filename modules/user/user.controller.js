@@ -162,14 +162,22 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-export const updateUserGenderDob = async (req, res) => {
+export const updateUserInfo = async (req, res) => {
   try {
-    const { gender, dob, houseNumber, address, pincode, city, state, country } =
-      req.body;
-    const userId = req.usre.id;
+    const {
+      gender,
+      dateOfBirth,
+      houseNumber,
+      address,
+      pincode,
+      city,
+      state,
+      country,
+    } = req.body;
+    const userId = req.user.userId;
     const allowedFields = [
       'gender',
-      'dob',
+      'dateOfBirth',
       'houseNumber',
       'address',
       'pincode',
@@ -191,8 +199,9 @@ export const updateUserGenderDob = async (req, res) => {
     }
 
     user.gender = gender;
-    user.dob = dob;
+    user.dateOfBirth = dateOfBirth;
     user.houseNumber = houseNumber;
+    user.address = address;
     user.pincode = pincode;
     user.city = city;
     user.state = state;

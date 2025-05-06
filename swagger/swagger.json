@@ -17,11 +17,11 @@
   ],
   "components": {
     "securitySchemes": {
-      "Authorization": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "authorization",
-        "description": "TOKEN THAT NEED TO BE SET IN HEADER WITH 'Bearer' KEYWORD"
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT Bearer Token"
       }
     }
   },
@@ -216,10 +216,15 @@
         },
         "security": [
           {
-            "Authorization": []
+            "bearerAuth": []
           }
         ]
       }
     }
-  }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }
