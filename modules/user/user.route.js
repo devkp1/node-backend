@@ -7,7 +7,7 @@ const userRoute = express.Router();
 userRoute.route('/register-user').post(registerUser);
 userRoute.route('/signin').post(isAuthenticateUser, loginUser);
 userRoute
-  .route('/update-gender-dob')
+  .route('/add-user-info')
   .put(isAuthenticateUser, verifyToken, updateUserInfo);
 
 export default userRoute;

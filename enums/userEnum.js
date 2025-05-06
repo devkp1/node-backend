@@ -1,5 +1,5 @@
 export const Gender = {
-  Man: 'man',
-  Woman: 'woman',
-  Other: 'other',
+  Man: 'M',
+  Woman: 'F',
+  Other: '0',
 };

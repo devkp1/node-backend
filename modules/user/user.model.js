@@ -28,7 +28,7 @@ const userSchema = new Schema(
       required: [true, emailRequiredMessage],
       unqiue: [true, emailUniqueMessage],
     },
-    dateOfBirth: {
+    dob: {
       type: Date,
     },
     password: {
@@ -56,8 +56,8 @@ const userSchema = new Schema(
       type: String,
     },
     pincode: {
-      type: String,
-      default: '',
+      type: Number,
+      default: 0,
     },
     city: {
       type: String,

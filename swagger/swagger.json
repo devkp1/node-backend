@@ -184,7 +184,7 @@
         }
       }
     },
-    "/update-gender-dob": {
+    "/add-user-info": {
       "put": {
         "tags": ["user"],
         "summary": "Update User Gender, Date of Birth, and Address",
@@ -202,7 +202,7 @@
         },
         "responses": {
           "200": {
-            "description": "User's information updated successfully"
+            "description": "User information added successfully"
           },
           "400": {
             "description": "Bad Request - Invalid input"

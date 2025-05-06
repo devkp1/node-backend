@@ -1,4 +1,5 @@
 import userModel from './user.model.js';
+import moment from 'moment';
 import { successResponse, errorResponse } from '../../utils/responseHandler.js';
 import {
   getHashPassword,
@@ -21,6 +22,7 @@ import {
 import {
   userRegisterMessage,
   userLoginMessage,
+  userDataAddedSccuessfully,
 } from '../../constants/responseMessages.js';
 import { statusCodes } from '../../constants/statusCodeMessages.js';
 import { validateInput } from '../../common/validation.js';
@@ -164,20 +166,12 @@ export const loginUser = async (req, res, next) => {
 
 export const updateUserInfo = async (req, res) => {
   try {
-    const {
-      gender,
-      dateOfBirth,
-      houseNumber,
-      address,
-      pincode,
-      city,
-      state,
-      country,
-    } = req.body;
+    const { gender, dob, houseNumber, address, pincode, city, state, country } =
+      req.body;
     const userId = req.user.userId;
     const allowedFields = [
       'gender',
-      'dateOfBirth',
+      'dob',
       'houseNumber',
       'address',
       'pincode',
@@ -199,7 +193,7 @@ export const updateUserInfo = async (req, res) => {
     }
 
     user.gender = gender;
-    user.dateOfBirth = dateOfBirth;
+    user.dob = moment(dob).format('DD/MM/YYYY');
     user.houseNumber = houseNumber;
     user.address = address;
     user.pincode = pincode;
@@ -208,7 +202,24 @@ export const updateUserInfo = async (req, res) => {
     user.country = country;
     await user.save();
 
-    return successResponse(res, user, userRegisterMessage, statusCodes.SUCCESS);
+    const updatedUser = {
+      id: user._id,
+      gender: user.gender,
+      dob: moment(user.dob).format('DD/MM/YYYY'),
+      houseNumber: user.houseNumber,
+      address: user.address,
+      pincode: user.pincode,
+      city: user.city,
+      state: user.state,
+      country: user.country,
+    };
+
+    return successResponse(
+      res,
+      updatedUser,
+      userDataAddedSccuessfully,
+      statusCodes.SUCCESS,
+    );
   } catch (error) {
     logger.error('updateUserGenderDob error..........', error.message);
     return errorResponse(
