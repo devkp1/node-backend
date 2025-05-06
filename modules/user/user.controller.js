@@ -60,6 +60,7 @@ export const registerUser = async (req, res) => {
       'fullName email password createdAt updatedAt',
     );
 
+    const accessToken = generateAccessToken(user);
     const { _id, createdAt, updatedAt } = newUser;
     const updatedUser = {
       id: _id,
@@ -67,16 +68,15 @@ export const registerUser = async (req, res) => {
       email,
       createdAt,
       updatedAt,
+      accessToken,
     };
-
-    const accessToken = generateAccessToken(user);
 
     console.log('res.........', res);
     console.log('user.........', user);
     console.log('accessToken.........', accessToken);
     return successResponse(
       res,
-      { user: updatedUser, accessToken },
+      updatedUser,
       userRegisterMessage,
       statusCodes.SUCCESS,
     );

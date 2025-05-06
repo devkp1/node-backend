@@ -2,7 +2,7 @@ import { AdditionalFeildsErrorMessage } from '../constants/errorMessages.js';
 import { statusCodes } from '../constants/statusCodeMessages.js';
 import { errorResponse } from './responseHandler.js';
 
-const validateAllowedFields = (allowedFields, obj, res) => {
+export const validateAllowedFields = (allowedFields, obj, res) => {
   const invalidFields = Object.keys(obj).filter(
     (key) => !allowedFields.includes(key),
   );
@@ -18,5 +18,3 @@ const validateAllowedFields = (allowedFields, obj, res) => {
   }
   return true;
 };
-
-export default validateAllowedFields;
