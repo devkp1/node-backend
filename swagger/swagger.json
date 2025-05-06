@@ -187,8 +187,8 @@
     "/add-user-info": {
       "put": {
         "tags": ["user"],
-        "summary": "Update User Gender, Date of Birth, and Address",
-        "description": "Update User's Gender, Date of Birth, and Address.",
+        "summary": "Add User Gender, Date of Birth, and Address",
+        "description": "Add User Gender, Date of Birth, and Address.",
         "requestbody": {
           "description": "Enter gender, date of birth, and address details.",
           "required": true,

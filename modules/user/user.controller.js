@@ -164,7 +164,7 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-export const updateUserInfo = async (req, res) => {
+export const userInfo = async (req, res) => {
   try {
     const { gender, dob, houseNumber, address, pincode, city, state, country } =
       req.body;
