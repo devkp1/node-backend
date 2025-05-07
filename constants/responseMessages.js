@@ -3,3 +3,7 @@ export const errorMessage = 'An error occurred';
 export const userRegisterMessage = 'Register successfully';
 export const userLoginMessage = 'User Logged In Successfully';
 export const userDataAddedSccuessfully = 'User info added successfully.';
+export const countryGetSuccessfully = 'Countries retreived successfully';
+export const stateGetSuccessfully = 'States retreived successfully';
+export const cityGetSuccessfully = 'City retrieved successfully';
+export const postalCodeGetSuccessfully = 'Postal code retreived successfully.';

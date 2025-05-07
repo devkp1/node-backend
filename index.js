@@ -9,10 +9,14 @@ import { errorHandler } from './middleware/errorHandler.js';
 import { setUpLogger } from './config/initial/setupLogging.js';
 import { setupGracefulShutdown } from './config/initial/shutdown.js';
 import { setupSwagger } from './config/initial/swagger.js';
+import { populateDatabase } from './utils/';
+import locationRoute from './modules/location/location.route.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
+
+populateDatabase();
 
 const corsOpts = {
   origin: '*',
@@ -29,6 +33,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1', userRoute);
+app.use('/api/v1', locationRoute);
 app.use(errorHandler);
 
 const server = app.listen(port, () => {

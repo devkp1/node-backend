@@ -8,6 +8,7 @@ import {
 import { errorResponse } from '../utils/responseHandler.js';
 import { statusCodes } from '../constants/statusCodeMessages.js';
 import logger from '../logger.js';
+import { errorMessage } from '../constants/responseMessages.js';
 const { VALIDATION_ERROR, UNAUTHORIZED, SERVER_ERROR, FORBIDDEN, NOT_FOUND } =
   statusCodes;
 
@@ -68,12 +69,12 @@ export const errorHandler = (err, req, res, next) => {
       break;
 
     default:
-      res.status(500).json({
-        status: false,
-        title: 'Internal Server Error',
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      errorMessage(
+        res,
+        err.messsage,
+        ServerErrorMessage,
+        statusCodes.SERVER_ERROR,
+      );
       next();
   }
 };

@@ -22,3 +22,14 @@ export const InvalidTokenErrorMessage = 'Invlaid Token.';
 export const AdditionalFeildsErrorMessage =
   'Additional fields are not allowed.';
 export const DuplicateFieldsErrorMessage = 'This field is already exists.';
+export const PostalCodeEmptyParamterMessage =
+  'Please check city name and try again.';
+export const CityEmptyParameterMessage =
+  'Please Check state code, country code and try again.';
+export const StateEmptyParameterMessage =
+  'Please Check country code and try again.';
+export const PostalCodeNotFoundMessage = 'Postal code not found.';
+export const CitiesNotFoundMessage = 'Cities not found.';
+export const StateNotFoundMessage = 'States not found.';
+export const CountriesNotFoundMessage =
+  'Countries not found. Please try again later.';

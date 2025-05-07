@@ -60,16 +60,19 @@ const userSchema = new Schema(
       default: 0,
     },
     city: {
-      type: String,
-      default: '',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'City',
+      default: null,
     },
     state: {
-      type: String,
-      default: '',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'State',
+      default: null,
     },
     country: {
-      type: String,
-      default: '',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Country',
+      default: null,
     },
     isUserVerified: {
       type: Boolean,
