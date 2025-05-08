@@ -2,7 +2,7 @@ import { Country, State, City } from 'country-state-city';
 import CountryModel from '../modules/location/models/countryModel.js';
 import StateModel from '../modules/location/models/stateModel.js';
 import CityModel from '../modules/location/models/cityModel.js';
-import getPostalCode from './postalCode.js';
+import { getPostalCode } from './postalCode.js';
 import logger from '../logger.js';
 
 export const populateDatabase = async () => {

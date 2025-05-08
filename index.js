@@ -9,7 +9,7 @@ import { errorHandler } from './middleware/errorHandler.js';
 import { setUpLogger } from './config/initial/setupLogging.js';
 import { setupGracefulShutdown } from './config/initial/shutdown.js';
 import { setupSwagger } from './config/initial/swagger.js';
-import { populateDatabase } from './utils/';
+import { populateDatabase } from './utils/populateLocationDatabase.js';
 import locationRoute from './modules/location/location.route.js';
 
 const app = express();

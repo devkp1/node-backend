@@ -1,7 +1,7 @@
 import axios from 'axios';
 import https from 'https';
 
-const getPostalCode = async () => {
+export const getPostalCode = async () => {
   try {
     const response = await axios.get(
       'https://api.zippopotam.us/in/gj/ahmedabad',

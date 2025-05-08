@@ -2,12 +2,15 @@ import {
   CountriesNotFoundMessage,
   NotFoundErrorMessage,
   ServerErrorMessage,
-} from '../../../constants/errorMessages';
-import { countryGetSuccessfully } from '../../../constants/responseMessages';
-import { statusCodes } from '../../../constants/statusCodeMessages';
-import logger from '../../../logger';
-import { errorResponse, successResponse } from '../../../utils/responseHandler';
-import Country from '../models/countryModel';
+} from '../../../constants/errorMessages.js';
+import { countryGetSuccessfully } from '../../../constants/responseMessages.js';
+import { statusCodes } from '../../../constants/statusCodeMessages.js';
+import logger from '../../../logger.js';
+import {
+  errorResponse,
+  successResponse,
+} from '../../../utils/responseHandler.js';
+import Country from '../models/countryModel.js';
 
 export const getAllCountries = async (req, res) => {
   try {

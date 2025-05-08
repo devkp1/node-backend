@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { CountryModelSchema } from '../../../constants/modelNameConstants';
+import { CountryModelSchema } from '../../../constants/modelNameConstants.js';
 
 const countrySchema = new Schema({
   name: { type: String, required: true },
