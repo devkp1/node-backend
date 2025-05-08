@@ -1,6 +1,5 @@
 import axios from 'axios';
 import https from 'https';
-import logger from '../logger.js';
 
 const getPostalCode = async () => {
   try {
@@ -21,7 +20,9 @@ const getPostalCode = async () => {
 
     return postalcodeDetails;
   } catch (error) {
-    logger.error(`Postal Code Error............. ${error.message}`);
+    if (error) {
+      return [];
+    }
   }
 };
 
