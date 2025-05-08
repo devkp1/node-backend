@@ -220,6 +220,224 @@
           }
         ]
       }
+    },
+    "/get-country": {
+      "get": {
+        "tags": ["location"],
+        "summary": "Get All Countries",
+        "description": "Retrieve a list of all countries",
+        "responses": {
+          "200": {
+            "description": "List of countries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Country name"
+                      },
+                      "isoCode": {
+                        "type": "string",
+                        "description": "Country ISO Code"
+                      },
+                      "phoneCode": {
+                        "type": "string",
+                        "description": "Country phone code"
+                      },
+                      "flag": {
+                        "type": "string",
+                        "description": "Country flag URL"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{countryCode}": {
+      "get": {
+        "tags": ["location"],
+        "summary": "Get States by Country Code",
+        "description": "Retrieve a list of states for a given country code",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Country ISO Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of states",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "State name"
+                      },
+                      "isoCode": {
+                        "type": "string",
+                        "description": "State ISO code"
+                      },
+                      "countryCode": {
+                        "type": "string",
+                        "description": "Country ISO Code"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid Country Code"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{countryCode}/{stateCode}": {
+      "get": {
+        "tags": ["location"],
+        "summary": "Get Cities by state Code",
+        "description": "Retrieve a list of cities for a given state code and country code",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Country ISO Code"
+            }
+          },
+          {
+            "name": "stateCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "State ISO code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of cities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "City name"
+                      },
+                      "stateCode": {
+                        "type": "string",
+                        "description": "State ISO code"
+                      },
+                      "countryCode": {
+                        "type": "string",
+                        "description": "Country ISO Code"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid State Code or  Country Code"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{countryCode}/{stateCode}/{cityName}": {
+      "get": {
+        "tags": {
+          "tags": ["location"],
+          "summary": "Get Postal Code by City Name",
+          "description": "Retreive the postal code for a given city name, state code, and country code",
+          "parameters": [
+            {
+              "name": "countryCode",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "description": "Country ISO Code"
+              }
+            },
+            {
+              "name": "stateCode",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "description": "State ISO code"
+              }
+            },
+            {
+              "name": "cityName",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "description": "City name"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Postal code retreived successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string",
+                    "description": "Postal code"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request - Invalid input"
+            },
+            "404": {
+              "description": "Not Found - Postal code not found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      }
     }
   },
   "security": [
