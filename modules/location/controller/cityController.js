@@ -31,7 +31,6 @@ export const getCitiesByStateCode = async (req, res) => {
       );
     }
 
-    const cities = await City.find({ countryCode, stateCode });
     const normalizedCountryCode = countryCode.toUpperCase();
     const normalizedStateCode = stateCode.toUpperCase();
 
