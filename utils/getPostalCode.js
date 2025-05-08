@@ -1,10 +1,10 @@
 import axios from 'axios';
 import https from 'https';
 
-export const getPostalCode = async () => {
+export const getPostalCode = async (cityName, stateCode, countryCode) => {
   try {
     const response = await axios.get(
-      'https://api.zippopotam.us/in/gj/ahmedabad',
+      `https://api.zippopotam.us/${countryCode}/${stateCode}/${cityName}`,
       {
         httpsAgent: new https.Agent({
           rejectUnauthroized: false,
@@ -25,5 +25,3 @@ export const getPostalCode = async () => {
     }
   }
 };
-
-getPostalCode();

@@ -11,7 +11,7 @@ import {
   errorResponse,
   successResponse,
 } from '../../../utils/responseHandler.js';
-import { getPostalCode } from '../../../utils/postalCode.js';
+import { getPostalCode } from '../../../utils/getPostalCode.js';
 import logger from '../../../logger.js';
 
 export const getPostalCodeByLocation = async (req, res) => {
