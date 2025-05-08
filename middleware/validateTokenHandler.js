@@ -19,6 +19,8 @@ export const isAuthenticateUser = async (req, res, next) => {
     );
   }
 
+  const token = authHeader.split(' ')[1];
+
   req.token = token;
   next();
 };
