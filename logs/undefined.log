@@ -2,3 +2,8 @@
 2025-05-06T08:46:05.901Z [31merror[39m: Registration error: Phone Number should be unique. 
 2025-05-06T09:04:05.827Z [31merror[39m: Registration error: Phone Number should be unique. 
 2025-05-06T10:35:59.011Z [31merror[39m: Registration error: Phone Number should be unique. 
+2025-05-08T11:26:50.352Z [31merror[39m: Registration error: Phone Number should be unique. 
+2025-05-08T11:55:13.385Z [31merror[39m: Registration error: Phone Number should be unique. 
+2025-05-08T11:55:43.785Z [31merror[39m: Registration error: E11000 duplicate key error collection: test.users index: phoneNumber_1 dup key: { phoneNumber: null } 
+2025-05-08T11:57:00.950Z [31merror[39m: token is not defined - GET /api/v1/get-country - ::1 
+2025-05-08T11:57:00.953Z [31merror[39m: token is not defined 
