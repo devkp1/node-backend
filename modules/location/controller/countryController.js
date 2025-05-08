@@ -25,9 +25,17 @@ export const getAllCountries = async (req, res) => {
       );
     }
 
+    const formattedCountries = countries.map((country) => ({
+      id: country._id,
+      name: country.name,
+      isoCode: country.isoCode,
+      phoneCode: country.phoneCode,
+      flag: country.flag,
+    }));
+
     return successResponse(
       res,
-      countries,
+      formattedCountries,
       countryGetSuccessfully,
       statusCodes.SUCCESS,
     );

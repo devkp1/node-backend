@@ -261,23 +261,28 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/{countryCode}": {
+    "/get-state": {
       "get": {
         "tags": ["location"],
         "summary": "Get States by Country Code",
-        "description": "Retrieve a list of states for a given country code",
+        "description": "Retrieve a list of all states by country code",
         "parameters": [
           {
             "name": "countryCode",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "description": "Country ISO Code"
-            }
+              "type": "string"
+            },
+            "description": "Country ISO Code to filter states"
           }
         ],
         "responses": {
@@ -290,6 +295,10 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "State ID"
+                      },
                       "name": {
                         "type": "string",
                         "description": "State name"
@@ -309,37 +318,45 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid Country Code"
+            "description": "Bad Request - Invalid Input"
+          },
+          "404": {
+            "description": "Not Found - States not found"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/{countryCode}/{stateCode}": {
+    "/get-city": {
       "get": {
         "tags": ["location"],
         "summary": "Get Cities by state Code",
-        "description": "Retrieve a list of cities for a given state code and country code",
+        "description": "Retrieve a list of all cities by state code",
         "parameters": [
           {
             "name": "countryCode",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "description": "Country ISO Code"
-            }
+              "type": "string"
+            },
+            "description": "Country ISO Code to filter cities"
           },
           {
             "name": "stateCode",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "description": "State ISO code"
-            }
+              "type": "string"
+            },
+            "description": "State ISO code to filter cities"
           }
         ],
         "responses": {
@@ -352,17 +369,43 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "City Id"
+                      },
                       "name": {
                         "type": "string",
                         "description": "City name"
                       },
-                      "stateCode": {
+                      "postalCode": {
                         "type": "string",
-                        "description": "State ISO code"
+                        "description": "City postal code"
                       },
-                      "countryCode": {
-                        "type": "string",
-                        "description": "Country ISO Code"
+                      "state": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "State ID"
+                          },
+                          "isoCode": {
+                            "type": "string",
+                            "description": "State ISO code"
+                          }
+                        }
+                      },
+                      "country": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Country ID"
+                          },
+                          "isoCode": {
+                            "type": "string",
+                            "description": "Country ISO Code"
+                          }
+                        }
                       }
                     }
                   }
@@ -371,47 +414,37 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid State Code or  Country Code"
+            "description": "Bad Request - Invalid input"
+          },
+          "404": {
+            "description": "Not Found - Cities not found"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/{countryCode}/{stateCode}/{cityName}": {
+    "/get-postal-code": {
       "get": {
         "tags": {
           "tags": ["location"],
           "summary": "Get Postal Code by City Name",
-          "description": "Retreive the postal code for a given city name, state code, and country code",
+          "description": "Retreive the postal code for a given city name",
           "parameters": [
             {
-              "name": "countryCode",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string",
-                "description": "Country ISO Code"
-              }
-            },
-            {
-              "name": "stateCode",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string",
-                "description": "State ISO code"
-              }
-            },
-            {
               "name": "cityName",
-              "in": "path",
+              "in": "query",
               "required": true,
               "schema": {
-                "type": "string",
-                "description": "City name"
-              }
+                "type": "string"
+              },
+              "description": "City name to filter postal codes"
             }
           ],
           "responses": {
@@ -420,8 +453,32 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "string",
-                    "description": "Postal code"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Postal code ID"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "City name"
+                        },
+                        "stateCode": {
+                          "type": "string",
+                          "description": "State ISO Code"
+                        },
+                        "countryCode": {
+                          "type": "string",
+                          "description": "Country ISO Code"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "description": "Postal Code"
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -435,7 +492,12 @@
             "500": {
               "description": "Internal Server Error"
             }
-          }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
         }
       }
     }

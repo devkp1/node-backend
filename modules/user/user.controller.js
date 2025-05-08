@@ -169,6 +169,8 @@ export const userInfo = async (req, res) => {
     const { gender, dob, houseNumber, address, pincode, city, state, country } =
       req.body;
     const userId = req.user.userId;
+    const pincodes = Number(pincode);
+
     const allowedFields = [
       'gender',
       'dob',
@@ -182,7 +184,7 @@ export const userInfo = async (req, res) => {
 
     if (!validateAllowedFields(allowedFields, req.body, res)) return;
 
-    const user = await userModel.findById(userId);
+    let user = await userModel.findById(userId);
     if (!user) {
       return errorResponse(
         res,
@@ -196,11 +198,17 @@ export const userInfo = async (req, res) => {
     user.dob = moment(dob).format('DD/MM/YYYY');
     user.houseNumber = houseNumber;
     user.address = address;
-    user.pincode = pincode;
+    user.pincode = pincodes;
     user.city = city;
     user.state = state;
     user.country = country;
     await user.save();
+
+    user = await user.populate([
+      { path: 'city', select: 'name' },
+      { path: 'state', select: 'name' },
+      { path: 'country', select: 'name' },
+    ]);
 
     const updatedUser = {
       id: user._id,
@@ -209,9 +217,18 @@ export const userInfo = async (req, res) => {
       houseNumber: user.houseNumber,
       address: user.address,
       pincode: user.pincode,
-      city: user.city,
-      state: user.state,
-      country: user.country,
+      city: {
+        id: user.city._id,
+        name: user.city.name,
+      },
+      state: {
+        id: user.state._id,
+        name: user.state.name,
+      },
+      country: {
+        id: user.country._id,
+        name: user.country.name,
+      },
     };
 
     return successResponse(

@@ -12,13 +12,13 @@ locationRoute
   .route('/get-country')
   .get(isAuthenticateUser, verifyToken, getAllCountries);
 locationRoute
-  .route('/:countryCode')
+  .route('/get-state')
   .get(isAuthenticateUser, verifyToken, getStatesByCountryCode);
 locationRoute
-  .route('/:countryCode/:stateCode')
+  .route('/get-city')
   .get(isAuthenticateUser, verifyToken, getCitiesByStateCode);
 locationRoute
-  .route('/:countryCode/:stateCode/:cityName')
+  .route('/get-postal-code')
   .get(isAuthenticateUser, verifyToken, getPostalCodeByLocation);
 
 export default locationRoute;

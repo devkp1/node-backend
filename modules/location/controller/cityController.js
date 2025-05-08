@@ -4,6 +4,8 @@ import {
   NotFoundErrorMessage,
   ServerErrorMessage,
   ValidationErrorMessage,
+  StateNotFoundMessage,
+  CountriesNotFoundMessage,
 } from '../../../constants/errorMessages.js';
 import { cityGetSuccessfully } from '../../../constants/responseMessages.js';
 import { statusCodes } from '../../../constants/statusCodeMessages.js';
@@ -13,12 +15,12 @@ import {
   successResponse,
 } from '../../../utils/responseHandler.js';
 import City from '../models/cityModel.js';
+import State from '../models/stateModel.js';
+import Country from '../models/countryModel.js';
 
 export const getCitiesByStateCode = async (req, res) => {
   try {
-    let { countryCode, stateCode } = req.params;
-    countryCode = countryCode.toUpperCase();
-    stateCode = stateCode.toUpperCase();
+    const { countryCode, stateCode } = req.query;
 
     if (!countryCode || !stateCode) {
       return errorResponse(
@@ -30,6 +32,37 @@ export const getCitiesByStateCode = async (req, res) => {
     }
 
     const cities = await City.find({ countryCode, stateCode });
+    const normalizedCountryCode = countryCode.toUpperCase();
+    const normalizedStateCode = stateCode.toUpperCase();
+
+    const state = await State.findOne({ isoCode: normalizedStateCode });
+    if (!state) {
+      logger.error(`State with code ${normalizedStateCode} not found`);
+      return errorResponse(
+        res,
+        new Error(NotFoundErrorMessage),
+        StateNotFoundMessage,
+        statusCodes.NOT_FOUND,
+      );
+    }
+
+    const country = await Country.findOne({ isoCode: normalizedCountryCode });
+    if (!country) {
+      logger.error(`Country with code ${normalizedCountryCode} not found `);
+      return errorResponse(
+        res,
+        new Error(NotFoundErrorMessage),
+        CountriesNotFoundMessage,
+        statusCodes.NOT_FOUND,
+      );
+    }
+
+    const cities = await City.find({
+      stateCode: normalizedStateCode,
+      countryCode: normalizedCountryCode,
+    })
+      .populate('stateId', 'isoCode')
+      .populate('countryId', 'isoCode');
 
     if (cities.length === 0) {
       return errorResponse(
@@ -40,9 +73,27 @@ export const getCitiesByStateCode = async (req, res) => {
       );
     }
 
+    const formattedCities = cities.map((city) => ({
+      id: city._id,
+      name: city.name,
+      postalCode: city.postalCode,
+      state: state._id
+        ? {
+            id: state._id,
+            isoCode: state.isoCode,
+          }
+        : null,
+      country: country._id
+        ? {
+            id: country._id,
+            isoCode: country.isoCode,
+          }
+        : null,
+    }));
+
     return successResponse(
       res,
-      cities,
+      formattedCities,
       cityGetSuccessfully,
       statusCodes.SUCCESS,
     );

@@ -11,17 +11,14 @@ import {
   errorResponse,
   successResponse,
 } from '../../../utils/responseHandler.js';
-import { getPostalCode } from '../../../utils/getPostalCode.js';
 import logger from '../../../logger.js';
+import City from '../models/cityModel.js';
 
 export const getPostalCodeByLocation = async (req, res) => {
-  let { cityName, stateCode, countryCode } = req.params;
-  cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1).toLowerCase();
-  stateCode = stateCode.toUpperCase();
-  countryCode = countryCode.toUpperCase();
-
   try {
-    if (!cityName || !stateCode || !countryCode) {
+    let { cityName } = req.query;
+
+    if (!cityName) {
       return errorResponse(
         res,
         new Error(ValidationErrorMessage),
@@ -30,7 +27,10 @@ export const getPostalCodeByLocation = async (req, res) => {
       );
     }
 
-    const postalCode = await getPostalCode(cityName, stateCode, countryCode);
+    cityName =
+      cityName.charAt(0).toUpperCase() + cityName.slice(1).toLowerCase();
+
+    const postalCode = await City.find({ name: cityName });
 
     if (!postalCode) {
       return errorResponse(
@@ -41,9 +41,17 @@ export const getPostalCodeByLocation = async (req, res) => {
       );
     }
 
+    const formattedPostalCode = postalCode.map((postCode) => ({
+      id: postCode._id,
+      name: postCode.name,
+      stateCode: postCode.stateCode,
+      countryCode: postCode.countryCode,
+      postalCode: postCode.postalCode,
+    }));
+
     return successResponse(
       res,
-      postalCode,
+      formattedPostalCode,
       postalCodeGetSuccessfully,
       statusCodes.SUCCESS,
     );

@@ -16,7 +16,7 @@ import logger from '../../../logger.js';
 
 export const getStatesByCountryCode = async (req, res) => {
   try {
-    let { countryCode } = req.params;
+    let { countryCode } = req.query;
     countryCode = countryCode.toUpperCase();
 
     if (!countryCode) {
@@ -28,7 +28,11 @@ export const getStatesByCountryCode = async (req, res) => {
       );
     }
 
-    const states = await State.find({ countryCode });
+    const query = {
+      countryCode: countryCode.toUpperCase(),
+    };
+
+    const states = await State.find(query);
 
     if (states.length === 0) {
       return errorResponse(
@@ -39,9 +43,16 @@ export const getStatesByCountryCode = async (req, res) => {
       );
     }
 
+    const formattedStates = states.map((state) => ({
+      id: state._id,
+      name: state.name,
+      isoCode: state.isoCode,
+      countryCode: state.countryCode,
+    }));
+
     return successResponse(
       res,
-      states,
+      formattedStates,
       stateGetSuccessfully,
       statusCodes.SUCCESS,
     );
