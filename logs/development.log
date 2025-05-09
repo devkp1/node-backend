@@ -16,3 +16,8 @@
 2025-05-05T10:11:49.129Z [31merror[39m: Registration error: Phone Number should be unique. 
 2025-05-09T05:28:19.090Z [31merror[39m: JWT verification error: jwt expired 
 2025-05-09T07:29:16.477Z [31merror[39m: JWT verification error: jwt expired 
+2025-05-09T08:53:43.393Z [31merror[39m: JWT verification error: jwt malformed 
+2025-05-09T08:53:46.611Z [31merror[39m: JWT verification error: jwt malformed 
+2025-05-09T08:53:47.714Z [31merror[39m: JWT verification error: jwt malformed 
+2025-05-09T08:54:17.776Z [31merror[39m: JWT verification error: jwt expired 
+2025-05-09T08:55:29.313Z [31merror[39m: JWT verification error: jwt malformed 
