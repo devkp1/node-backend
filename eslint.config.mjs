@@ -11,7 +11,7 @@ export default [
       },
     },
     rules: {
-      'no-console': 'error',
+      // 'no-console': 'error',
       'no-unused-vars': 'error', // Warn on unused variables
       'no-undef': 'error', // Disallow undeclared variables
       'prefer-const': 'warn', // Prefer const over let when variable is not reassigned

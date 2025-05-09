@@ -1,20 +1,23 @@
 import express from 'express';
 import { configDotenv } from 'dotenv';
 import cors from 'cors';
+import helmet from 'helmet';
 import { db } from './config/database/databaseConnection.js';
 import logger from './logger.js';
 import userRoute from './modules/user/user.route.js';
+import locationRoute from './modules/location/location.route.js';
 configDotenv();
 import { errorHandler } from './middleware/errorHandler.js';
 import { setUpLogger } from './config/initial/setupLogging.js';
 import { setupGracefulShutdown } from './config/initial/shutdown.js';
 import { setupSwagger } from './config/initial/swagger.js';
 import { populateDatabase } from './utils/populateLocationDatabase.js';
-import locationRoute from './modules/location/location.route.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
+
+app.use(helmet());
 
 populateDatabase();
 
