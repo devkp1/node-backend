@@ -18,8 +18,12 @@ import {
   UnauthroizedErrorMessage,
   ValidationErrorMessage,
   emailUniqueMessage,
+  InvalidOrExpireOTP,
 } from '../../constants/errorMessages.js';
 import {
+  otpSentMessage,
+  otpVerifiedSuccessfully,
+  passwordResetSuccessMessage,
   userRegisterMessage,
   userLoginMessage,
   userDataAddedSccuessfully,
@@ -29,6 +33,7 @@ import { validateInput } from '../../common/validation.js';
 import { generateAccessToken } from '../../utils/tokenGenerator.js';
 import logger from '../../logger.js';
 import { validateAllowedFields } from '../../utils/checkAllowedFields.js';
+import { generateOTP, sendOTPEmail } from '../../utils/otp.utils.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -236,6 +241,114 @@ export const userInfo = async (req, res) => {
     );
   } catch (error) {
     logger.error('updateUserGenderDob error..........', error.message);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};
+
+export const requestOTP = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return errorResponse(
+        res,
+        new Error(UserNotFoundMessage),
+        UserNotFoundMessage,
+        statusCodes.NOT_FOUND,
+      );
+    }
+
+    const otp = generateOTP();
+
+    user.otp = otp;
+
+    user.otpExpires = moment().add(10, 'minutes').toDate();
+
+    await user.save();
+
+    await sendOTPEmail(user.email, otp);
+
+    return successResponse(res, null, otpSentMessage, statusCodes.SUCCESS);
+  } catch (error) {
+    logger.error(`requestOTP error....... ${error.message}`);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};
+
+export const verifyOTP = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { otp } = req.body;
+
+    const user = await userModel.findById(userId);
+    if (!user || user.otp != otp || moment().isAfter(user.otpExpires)) {
+      return errorResponse(
+        res,
+        new Error(UnauthroizedErrorMessage),
+        InvalidOrExpireOTP,
+        statusCodes.UNAUTHORIZED,
+      );
+    }
+
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
+
+    return successResponse(
+      res,
+      null,
+      otpVerifiedSuccessfully,
+      statusCodes.SUCCESS,
+    );
+  } catch (error) {
+    logger.error(`OTP verification error...... ${error.message}`);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { newPassword } = req.body;
+
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return errorResponse(
+        res,
+        new Error(NotFoundErrorMessage),
+        UserNotFoundMessage,
+        statusCodes.NOT_FOUND,
+      );
+    }
+
+    user.password = await getHashPassword(newPassword);
+    await user.save();
+
+    return successResponse(
+      res,
+      null,
+      passwordResetSuccessMessage,
+      statusCodes.SUCCESS,
+    );
+  } catch (error) {
+    logger.error(`Password reset error...... ${error.message}`);
     return errorResponse(
       res,
       error,
