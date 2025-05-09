@@ -22,6 +22,7 @@ export const InvalidTokenErrorMessage = 'Invlaid Token.';
 export const AdditionalFeildsErrorMessage =
   'Additional fields are not allowed.';
 export const DuplicateFieldsErrorMessage = 'This field is already exists.';
+export const InvalidOrExpireOTP = 'Invalid or expired OTP';
 export const PostalCodeEmptyParamterMessage =
   'Please check city name and try again.';
 export const CityEmptyParameterMessage =

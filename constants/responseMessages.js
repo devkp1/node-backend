@@ -7,3 +7,6 @@ export const countryGetSuccessfully = 'Countries retreived successfully';
 export const stateGetSuccessfully = 'States retreived successfully';
 export const cityGetSuccessfully = 'City retrieved successfully';
 export const postalCodeGetSuccessfully = 'Postal code retreived successfully.';
+export const otpVerifiedSuccessfully = 'OTP veriefied successfully';
+export const otpSentMessage = 'OTP sent to email';
+export const passwordResetSuccessMessage = 'Password reset successfully';
