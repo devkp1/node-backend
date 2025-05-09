@@ -44,10 +44,6 @@ export const populateDatabase = async () => {
       const states = State.getStatesOfCountry(country.isoCode);
       for (const state of states) {
         const cities = City.getCitiesOfState(country.isoCode, state.isoCode);
-        console.log(
-          `Cities for state ${state.isoCode}, country ${country.isoCode}:`,
-          cities,
-        );
 
         const cityPromises = cities.map(async (city) => {
           const existingCity = await CityModel.findOne({

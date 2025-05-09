@@ -73,9 +73,6 @@ export const registerUser = async (req, res) => {
       accessToken,
     };
 
-    console.log('res.........', res);
-    console.log('user.........', user);
-    console.log('accessToken.........', accessToken);
     return successResponse(
       res,
       updatedUser,

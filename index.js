@@ -31,7 +31,6 @@ setUpLogger(logger);
 setupSwagger(app);
 
 app.get('/', (req, res) => {
-  // console.log(process.env.ENVIRONMENT);
   res.send('Hello World!');
 });
 
