@@ -8,6 +8,8 @@ const countrySchema = new Schema({
   flag: { type: String, required: true },
 });
 
-const Country = mongoose.model(CountryModelSchema, countrySchema);
+const Country =
+  mongoose.models[CountryModelSchema] ||
+  mongoose.model(CountryModelSchema, countrySchema);
 
 export default Country;

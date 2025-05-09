@@ -47,7 +47,7 @@ export const getCitiesByStateCode = async (req, res) => {
 
     const country = await Country.findOne({ isoCode: normalizedCountryCode });
     if (!country) {
-      logger.error(`Country with code ${normalizedCountryCode} not found `);
+      logger.error(`Country with code ${normalizedCountryCode} not found`);
       return errorResponse(
         res,
         new Error(NotFoundErrorMessage),
@@ -59,9 +59,7 @@ export const getCitiesByStateCode = async (req, res) => {
     const cities = await City.find({
       stateCode: normalizedStateCode,
       countryCode: normalizedCountryCode,
-    })
-      .populate('stateId', 'isoCode')
-      .populate('countryId', 'isoCode');
+    });
 
     if (cities.length === 0) {
       return errorResponse(
@@ -76,18 +74,14 @@ export const getCitiesByStateCode = async (req, res) => {
       id: city._id,
       name: city.name,
       postalCode: city.postalCode,
-      state: state._id
-        ? {
-            id: state._id,
-            isoCode: state.isoCode,
-          }
-        : null,
-      country: country._id
-        ? {
-            id: country._id,
-            isoCode: country.isoCode,
-          }
-        : null,
+      state: {
+        id: state._id,
+        isoCode: state.isoCode,
+      },
+      country: {
+        id: country._id,
+        isoCode: country.isoCode,
+      },
     }));
 
     return successResponse(

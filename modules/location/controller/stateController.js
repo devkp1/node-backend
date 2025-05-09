@@ -17,8 +17,8 @@ import logger from '../../../logger.js';
 export const getStatesByCountryCode = async (req, res) => {
   try {
     let { countryCode } = req.query;
+    console.log(req.query);
     countryCode = countryCode.toUpperCase();
-
     if (!countryCode) {
       return errorResponse(
         res,
@@ -57,7 +57,7 @@ export const getStatesByCountryCode = async (req, res) => {
       statusCodes.SUCCESS,
     );
   } catch (error) {
-    logger.error(`getSTatesByCountryCode error..... ${error.message}`);
+    logger.error(`getStatesByCountryCode error..... ${error.message}`);
 
     return errorResponse(
       res,

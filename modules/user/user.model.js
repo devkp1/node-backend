@@ -5,7 +5,6 @@ import {
   emailUniqueMessage,
   fullNameRequiredMessage,
   passwordRequiredMessage,
-  phoneNumberUniqueMessge,
 } from '../../constants/errorMessages.js';
 import { Gender } from '../../enums/userEnum.js';
 

@@ -10,13 +10,13 @@ import {
   errorResponse,
   successResponse,
 } from '../../../utils/responseHandler.js';
-import Country from '../models/countryModel.js';
+import Country from '../Models/countryModel.js';
 
 export const getAllCountries = async (req, res) => {
   try {
     const countries = await Country.find();
 
-    if (countries.lenngth === 0) {
+    if (countries.length === 0) {
       return errorResponse(
         res,
         new Error(NotFoundErrorMessage),
@@ -40,7 +40,7 @@ export const getAllCountries = async (req, res) => {
       statusCodes.SUCCESS,
     );
   } catch (error) {
-    logger.error(`getAllCountry error......... ${error.message}`);
+    logger.error(`getAllCountries error: ${error.message}`);
     return errorResponse(
       res,
       error,
