@@ -10,3 +10,4 @@ export const postalCodeGetSuccessfully = 'Postal code retreived successfully.';
 export const otpVerifiedSuccessfully = 'OTP veriefied successfully';
 export const otpSentMessage = 'OTP sent to email successfully';
 export const passwordResetSuccessMessage = 'Password reset successfully';
+export const logoutSuccessMessage = 'Logged out successfully';

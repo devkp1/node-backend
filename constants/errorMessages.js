@@ -34,3 +34,4 @@ export const CitiesNotFoundMessage = 'Cities not found.';
 export const StateNotFoundMessage = 'States not found.';
 export const CountriesNotFoundMessage =
   'Countries not found. Please try again later.';
+export const blackListedTokenMessage = 'Token is blacklisted';

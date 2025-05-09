@@ -27,6 +27,7 @@ import {
   userRegisterMessage,
   userLoginMessage,
   userDataAddedSccuessfully,
+  logoutSuccessMessage,
 } from '../../constants/responseMessages.js';
 import { statusCodes } from '../../constants/statusCodeMessages.js';
 import { validateInput } from '../../common/validation.js';
@@ -34,6 +35,7 @@ import { generateAccessToken } from '../../utils/tokenGenerator.js';
 import logger from '../../logger.js';
 import { validateAllowedFields } from '../../utils/checkAllowedFields.js';
 import { generateOTP, sendOTPEmail } from '../../utils/otp.utils.js';
+import { blacklistedToken } from '../../utils/tokenManager.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -349,6 +351,29 @@ export const resetPassword = async (req, res) => {
     );
   } catch (error) {
     logger.error(`Password reset error...... ${error.message}`);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};
+
+export const logoutUser = async (req, res) => {
+  try {
+    const token = req.token;
+
+    await blacklistedToken(token);
+
+    return successResponse(
+      res,
+      null,
+      logoutSuccessMessage,
+      statusCodes.SUCCESS,
+    );
+  } catch (error) {
+    logger.error(`Logout error...... ${error.message}`);
     return errorResponse(
       res,
       error,

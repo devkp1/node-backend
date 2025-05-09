@@ -409,6 +409,26 @@
         }
       }
     },
+    "/logout": {
+      "post": {
+        "summary": "Log out User",
+        "tags": ["logout"],
+        "description": "Log out User",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged out successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/get-country": {
       "get": {
         "tags": ["location"],
