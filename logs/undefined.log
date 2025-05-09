@@ -7,3 +7,18 @@
 2025-05-08T11:55:43.785Z [31merror[39m: Registration error: E11000 duplicate key error collection: test.users index: phoneNumber_1 dup key: { phoneNumber: null } 
 2025-05-08T11:57:00.950Z [31merror[39m: token is not defined - GET /api/v1/get-country - ::1 
 2025-05-08T11:57:00.953Z [31merror[39m: token is not defined 
+2025-05-08T12:03:38.790Z [31merror[39m: getSTatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:22:04.786Z [31merror[39m: getSTatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:23:18.336Z [31merror[39m: getSTatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:27:07.495Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:27:36.223Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:29:52.234Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:30:10.555Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:30:44.611Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:31:08.045Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:32:53.016Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:44:51.764Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:45:16.054Z [31merror[39m: getStatesByCountryCode error..... Cannot read properties of undefined (reading 'toUpperCase') 
+2025-05-08T12:54:41.396Z [31merror[39m: State with code GJ not found 
+2025-05-08T12:57:06.792Z [31merror[39m: State with code GJ not found 
+2025-05-08T13:00:51.421Z [31merror[39m: Location populate error: country is not defined 

@@ -5,4 +5,4 @@ package-lock.json
 .env.production
 .env.testing
 
-log
+logs/
