@@ -70,23 +70,31 @@ export const getCitiesByStateCode = async (req, res) => {
       );
     }
 
+    const stateDetails = {
+      id: state._id,
+      isoCode: state.isoCode,
+    };
+
+    const countryDetails = {
+      id: country._id,
+      isoCode: country.isoCode,
+    };
+
     const formattedCities = cities.map((city) => ({
       id: city._id,
-      name: city.name,
+      cityName: city.name,
       postalCode: city.postalCode,
-      state: {
-        id: state._id,
-        isoCode: state.isoCode,
-      },
-      country: {
-        id: country._id,
-        isoCode: country.isoCode,
-      },
     }));
+
+    const responsePayload = {
+      country: countryDetails,
+      state: stateDetails,
+      cities: formattedCities,
+    };
 
     return successResponse(
       res,
-      formattedCities,
+      responsePayload,
       cityGetSuccessfully,
       statusCodes.SUCCESS,
     );
