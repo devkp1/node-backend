@@ -1,5 +1,6 @@
 import userModel from './user.model.js';
 import bcrypt from 'bcryptjs';
+import cloudinary from '../../config/imageConfig/cloudinary.config.js';
 import moment from 'moment';
 import { successResponse, errorResponse } from '../../utils/responseHandler.js';
 import {
@@ -32,7 +33,8 @@ import {
   userRegisterMessage,
   userLoginMessage,
   userDataAddedSccuessfully,
-  logoutSuccessMessage,
+  userDataUpdatedSuccessfully,
+  UserDetailsGetSuccessfully,
 } from '../../constants/responseMessages.js';
 import { statusCodes } from '../../constants/statusCodeMessages.js';
 import { validateInput } from '../../common/validation.js';
@@ -40,8 +42,8 @@ import { generateAccessToken } from '../../utils/tokenGenerator.js';
 import logger from '../../logger.js';
 import { validateAllowedFields } from '../../utils/checkAllowedFields.js';
 import { generateOTP, sendOTPEmail } from '../../utils/otp.utils.js';
-import { blacklistedToken } from '../../utils/tokenManager.js';
-import { useReducer } from 'react';
+import { checkUserExists } from '../../utils/checkUserExists.js';
+import { uploadProfilePicture } from '../../utils/uploadProfilePicture.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -179,7 +181,6 @@ export const userInfo = async (req, res) => {
     const { gender, dob, houseNumber, address, pincode, city, state, country } =
       req.body;
     const userId = req.user.userId;
-    const pincodes = Number(pincode);
 
     const allowedFields = [
       'gender',
@@ -194,21 +195,14 @@ export const userInfo = async (req, res) => {
 
     if (!validateAllowedFields(allowedFields, req.body, res)) return;
 
-    let user = await userModel.findById(userId);
-    if (!user) {
-      return errorResponse(
-        res,
-        new Error(UserNotFoundMessage),
-        UserNotFoundMessage,
-        statusCodes.NOT_FOUND,
-      );
-    }
+    let user = await checkUserExists(userId, res);
+    if (!user) return;
 
     user.gender = gender;
     user.dob = moment(dob).format('DD/MM/YYYY');
     user.houseNumber = houseNumber;
     user.address = address;
-    user.pincode = pincodes;
+    user.pincode = pincode;
     user.city = city;
     user.state = state;
     user.country = country;
@@ -249,6 +243,91 @@ export const userInfo = async (req, res) => {
     );
   } catch (error) {
     logger.error('updateUserGenderDob error..........', error.message);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};
+
+export const UserProfile = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { fullName, phoneNumber, email, countryCode, gender, dob } = req.body;
+
+    const isValid = validateInput(
+      userUpdateValidations,
+      { fullName, email },
+      res,
+    );
+    if (!isValid) return;
+
+    let user = await checkUserExists(userId, res);
+    if (!user) return;
+
+    user = await userModel.findByIdAndUpdate(
+      userId,
+      {
+        phoneNumber,
+        fullName,
+        email,
+        countryCode,
+        gender,
+        dob,
+      },
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      },
+    );
+
+    let profilePicture = user.profilePicture;
+    if (req.file) {
+      const newProfilePictureUrl = await uploadProfilePicture(req.file, res);
+      if (newProfilePictureUrl) {
+        profilePicture = newProfilePictureUrl;
+      } else {
+        return;
+      }
+    }
+
+    user = await user.populate([
+      { path: 'city', select: 'name' },
+      { path: 'country', select: 'phoneCode' },
+    ]);
+
+    const updatedUser = {
+      id: user._id,
+      fullName: user.fullName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+      gender: user.gender,
+      profilePicture: profilePicture,
+      dob: moment(user.dob).format('DD/MM/YYYY'),
+      city: {
+        id: user.city._id,
+        cityName: user.city.name,
+      },
+      country: {
+        id: user.country._id,
+        countryCode: user.country.phoneCode,
+      },
+    };
+
+    await user.save();
+
+    return successResponse(
+      res,
+      updatedUser,
+      userDataUpdatedSuccessfully,
+      statusCodes.SUCCESS,
+    );
+  } catch (error) {
+    logger.error(`Logout error: ${error.message}`);
+    logger.error(`Update error: ${error.message}`);
     return errorResponse(
       res,
       error,
@@ -440,16 +519,45 @@ export const resetPassword = async (req, res) => {
   }
 };
 
-export const logoutUser = async (req, res) => {
+export const getUserProfile = async (req, res) => {
   try {
-    const token = req.token;
+    const userId = req.user.userId;
 
-    await blacklistedToken(token);
+    const user = await checkUserExists(userId, res);
+    if (!user) return;
+
+    const userDetails = await userModel
+      .findById(
+        user._id,
+        'fullName countryCode phoneNumber email gender dob city country profilePicture',
+      )
+      .populate([
+        { path: 'city', select: 'name' },
+        { path: 'country', select: 'phoneCode' },
+      ]);
+
+    const formattedUser = {
+      id: user._id,
+      fullName: userDetails.fullName,
+      phoneNumber: userDetails.phoneNumber,
+      email: userDetails.email,
+      dob: moment(userDetails.dob).format('DD/MM/YYYY'),
+      gender: userDetails.gender,
+      profilePicture: userDetails.profilePicture,
+      city: {
+        id: userDetails.city._id,
+        cityName: userDetails.country.phoneCode,
+      },
+      country: {
+        id: userDetails.country._id,
+        phoneCode: userDetails.country.phoneCode,
+      },
+    };
 
     return successResponse(
       res,
-      null,
-      logoutSuccessMessage,
+      formattedUser,
+      UserDetailsGetSuccessfully,
       statusCodes.SUCCESS,
     );
   } catch (error) {

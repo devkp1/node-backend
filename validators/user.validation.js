@@ -43,3 +43,11 @@ export const resetPasswordValidations = Joi.object({
     'any.required': passwordRequiredMessage,
   }),
 });
+
+export const userUpdateValidatios = Joi.object({
+  fullName: Joi.string().min(3).max(40).required(fullNameRequiredMessage),
+  email: Joi.string().pattern(new RegExp(emailRegex)).required().messages({
+    'string.pattern.base': emailValidationMessage,
+    'any.required': emailRequiredMessage,
+  }),
+});

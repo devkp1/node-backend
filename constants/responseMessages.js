@@ -11,3 +11,6 @@ export const otpVerifiedSuccessfully = 'OTP veriefied successfully';
 export const otpSentMessage = 'OTP sent to email successfully';
 export const passwordResetSuccessMessage = 'Password reset successfully';
 export const logoutSuccessMessage = 'Logged out successfully';
+export const UserDetailsGetSuccessfully =
+  'User details retreived successfully.';
+export const userDataUpdatedSuccessfully = 'User updated Successfully.';

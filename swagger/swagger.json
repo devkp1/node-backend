@@ -120,6 +120,66 @@
         "country"
       ],
       "additionalProperties": false
+    },
+    "UserProfile": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "User ID"
+        },
+        "fullName": {
+          "type": "string",
+          "description": "User's full name"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "User's phone number"
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address"
+        },
+        "dob": {
+          "type": "string",
+          "description": "User's date of birth",
+          "example": "01/01/2000"
+        },
+        "gender": {
+          "type": "string",
+          "description": "User's gender"
+        },
+        "profilePicture": {
+          "type": "string",
+          "description": "URL of the user's profile picture"
+        },
+        "city": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "City ID"
+            },
+            "cityName": {
+              "type": "string",
+              "description": "City name"
+            }
+          }
+        },
+        "country": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Country ID"
+            },
+            "phoneCode": {
+              "type": "string",
+              "description": "Country phone code"
+            }
+          }
+        }
+      }
     }
   },
   "paths": {
@@ -796,6 +856,190 @@
             "description": "Internal Server Error"
           }
         }
+      }
+    },
+    "/get-user": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get User Profile",
+        "description": "Retrieve the profile details of the authenticated user",
+        "responses": {
+          "200": {
+            "description": "User profile retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "User ID"
+                    },
+                    "fullName": {
+                      "type": "string",
+                      "description": "User's full name",
+                      "example": "John Doe"
+                    },
+                    "phoneNumber": {
+                      "type": "string",
+                      "description": "User's phone number",
+                      "example": "+1234567890"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User's email address",
+                      "example": "john.doe@example.com"
+                    },
+                    "dob": {
+                      "type": "string",
+                      "format": "date",
+                      "description": "User's date of birth",
+                      "example": "1990-01-01"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "User's gender",
+                      "example": "Male"
+                    },
+                    "profilePicture": {
+                      "type": "string",
+                      "description": "URL of user's profile picture",
+                      "example": "http://example.com/profile.jpg"
+                    },
+                    "city": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "City ID"
+                        },
+                        "cityName": {
+                          "type": "string",
+                          "description": "City name",
+                          "example": "New York"
+                        }
+                      }
+                    },
+                    "country": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Country ID"
+                        },
+                        "phoneCode": {
+                          "type": "string",
+                          "description": "Country phone code",
+                          "example": "+1"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "fullName",
+                    "phoneNumber",
+                    "email",
+                    "dob",
+                    "gender",
+                    "profilePicture",
+                    "city",
+                    "country"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/update-profile": {
+      "put": {
+        "tags": ["user"],
+        "summary": "Update User Profile",
+        "description": "Update the profile of the authenticated user",
+        "requestBody": {
+          "description": "Profile update details",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fullName": {
+                    "type": "string",
+                    "description": "User's full name",
+                    "example": "John Doe"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "User's phone number",
+                    "example": "+1234567890"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email address",
+                    "example": "john.doe@example.com"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "description": "User's gender",
+                    "example": "Male"
+                  },
+                  "dob": {
+                    "type": "string",
+                    "description": "User's date of birth",
+                    "format": "date",
+                    "example": "1990-01-01"
+                  },
+                  "profilePicture": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Profile picture to upload"
+                  }
+                },
+                "required": ["fullName", "phoneNumber", "email"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid token"
+          },
+          "500": {
+            "description": "Internal Server error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/get-country": {

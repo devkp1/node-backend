@@ -6,13 +6,12 @@ const successResponse = (
   data,
   message = successMessage,
   statusCode = statusCodes.SUCCESS,
-  token,
 ) => {
   res.status(statusCode).json({
-    status: true,
+    status: successMessage,
+    statusCode: statusCode,
     message,
     data,
-    token,
   });
 };
 
@@ -23,7 +22,8 @@ const errorResponse = (
   statusCode = statusCodes.SERVER_ERROR,
 ) => {
   res.status(statusCode).json({
-    status: false,
+    status: errorMessage,
+    statusCode: statusCode,
     message,
     error: error.message || error,
   });

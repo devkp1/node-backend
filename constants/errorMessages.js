@@ -41,3 +41,5 @@ export const passwordNotMatch =
   'New password and confirm password do not match.';
 export const incorrectCurrentPassword = 'Current password is incorrect.';
 export const passwordResetSuccessMessage = 'Password reset successfully.';
+export const ImageUploadErrorMessage =
+  'Provided Image file is not valid, Only JPG, PNG Image is Applicable';
