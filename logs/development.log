@@ -21,3 +21,35 @@
 2025-05-09T08:53:47.714Z [31merror[39m: JWT verification error: jwt malformed 
 2025-05-09T08:54:17.776Z [31merror[39m: JWT verification error: jwt expired 
 2025-05-09T08:55:29.313Z [31merror[39m: JWT verification error: jwt malformed 
+2025-05-12T05:40:10.168Z [31merror[39m: updateUserGenderDob error.......... 
+2025-05-12T05:42:03.729Z [31merror[39m: updateUserGenderDob error.......... 
+2025-05-12T05:42:34.751Z [31merror[39m: updateUserGenderDob error.......... 
+2025-05-12T05:42:40.692Z [31merror[39m: updateUserGenderDob error.......... 
+2025-05-12T05:43:01.928Z [31merror[39m: updateUserGenderDob error.......... 
+2025-05-12T05:44:18.872Z [31merror[39m: JWT verification error: jwt expired 
+2025-05-12T05:44:25.542Z [31merror[39m: JWT verification error: jwt expired 
+2025-05-12T05:44:50.957Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22fc75490f8sm54640705ad.42 - gsmtp 
+2025-05-12T05:44:57.556Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-30ad4d2ec0asm7963460a91.15 - gsmtp 
+2025-05-12T05:45:48.467Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-74237727b3esm5427951b3a.55 - gsmtp 
+2025-05-12T05:46:59.226Z [31merror[39m: OTP verification error...... Cannot destructure property 'otp' of 'req.body' as it is undefined. 
+2025-05-12T05:52:06.008Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-74237a0cfc5sm5490826b3a.91 - gsmtp 
+2025-05-12T05:58:05.400Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22fc7548d29sm54930475ad.35 - gsmtp 
+2025-05-12T06:00:46.132Z [31merror[39m: Password reset error...... Cannot destructure property 'newPassword' of 'req.body' as it is undefined. 
+2025-05-12T06:03:59.110Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-b234a0b29casm4211467a12.28 - gsmtp 
+2025-05-12T06:06:14.628Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-b2350ddbb93sm4935311a12.61 - gsmtp 
+2025-05-12T06:07:53.502Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-30c39e760casm5891157a91.45 - gsmtp 
+2025-05-12T06:08:14.941Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-74237a8f45csm5439951b3a.178 - gsmtp 
+2025-05-12T06:10:15.287Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22fc829ea8esm54690805ad.205 - gsmtp 
+2025-05-12T06:26:15.376Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-74237704ba3sm5356511b3a.31 - gsmtp 
+2025-05-12T06:39:36.012Z [31merror[39m: OTP verification error...... Cannot destructure property 'otp' of 'req.body' as it is undefined. 

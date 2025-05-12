@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  forgotPassword,
   loginUser,
   logoutUser,
   registerUser,
@@ -24,5 +25,7 @@ userRoute.route('/verify-otp').post(isAuthenticateUser, verifyToken, verifyOTP);
 userRoute
   .route('/reset-password')
   .put(isAuthenticateUser, verifyToken, resetPassword);
+userRoute.route('/forgot-password').put(forgotPassword);
+
 userRoute.route('/logout').post(isAuthenticateUser, verifyToken, logoutUser);
 export default userRoute;

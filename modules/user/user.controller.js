@@ -1,4 +1,5 @@
 import userModel from './user.model.js';
+import bcrypt from 'bcryptjs';
 import moment from 'moment';
 import { successResponse, errorResponse } from '../../utils/responseHandler.js';
 import {
@@ -8,6 +9,7 @@ import {
 import {
   userValidations,
   loginValidations,
+  resetPasswordValidations,
 } from '../../validators/user.validation.js';
 import {
   EmailAndPasswordRequiredMessage,
@@ -19,6 +21,9 @@ import {
   ValidationErrorMessage,
   emailUniqueMessage,
   InvalidOrExpireOTP,
+  UserInfoRequiredMessage,
+  passwordNotMatch,
+  incorrectCurrentPassword,
 } from '../../constants/errorMessages.js';
 import {
   otpSentMessage,
@@ -36,6 +41,7 @@ import logger from '../../logger.js';
 import { validateAllowedFields } from '../../utils/checkAllowedFields.js';
 import { generateOTP, sendOTPEmail } from '../../utils/otp.utils.js';
 import { blacklistedToken } from '../../utils/tokenManager.js';
+import { useReducer } from 'react';
 
 export const registerUser = async (req, res) => {
   try {
@@ -254,10 +260,8 @@ export const userInfo = async (req, res) => {
 
 export const requestOTP = async (req, res) => {
   try {
-    const userId = req.user.userId;
-
-    const user = await userModel.findById(userId);
-
+    const userEmail = req.body.email;
+    const user = await userModel.findByOne({ email: userEmail });
     if (!user) {
       return errorResponse(
         res,
@@ -276,7 +280,7 @@ export const requestOTP = async (req, res) => {
     await user.save();
 
     await sendOTPEmail(user.email, otp);
-
+    console.log('new otp?????????', user.otp);
     return successResponse(res, null, otpSentMessage, statusCodes.SUCCESS);
   } catch (error) {
     logger.error(`requestOTP error....... ${error.message}`);
@@ -291,14 +295,13 @@ export const requestOTP = async (req, res) => {
 
 export const verifyOTP = async (req, res) => {
   try {
-    const userId = req.user.userId;
-    const { otp } = req.body;
+    const { email, otp } = req.body;
 
-    const user = await userModel.findById(userId);
+    const user = await userModel.findByOne({ email });
     if (!user || user.otp != otp || moment().isAfter(user.otpExpires)) {
       return errorResponse(
         res,
-        new Error(UnauthroizedErrorMessage),
+        new Error(InvalidOrExpireOTP),
         InvalidOrExpireOTP,
         statusCodes.UNAUTHORIZED,
       );
@@ -306,6 +309,7 @@ export const verifyOTP = async (req, res) => {
 
     user.otp = undefined;
     user.otpExpires = undefined;
+    user.isOTPVerified = true;
     await user.save();
 
     return successResponse(
@@ -325,22 +329,98 @@ export const verifyOTP = async (req, res) => {
   }
 };
 
-export const resetPassword = async (req, res) => {
+export const forgotPassword = async (req, res) => {
   try {
-    const userId = req.user.userId;
-    const { newPassword } = req.body;
+    const { email, newPassword } = req.body;
 
-    const user = await userModel.findById(userId);
+    const user = await userModel.findONe({ email });
+
     if (!user) {
       return errorResponse(
         res,
-        new Error(NotFoundErrorMessage),
+        new Error(UserInfoRequiredMessage),
         UserNotFoundMessage,
         statusCodes.NOT_FOUND,
       );
     }
 
+    if (!user.isOTPVerified) {
+      return errorResponse(
+        res,
+        new Error(UnauthroizedErrorMessage),
+        InvalidOrExpireOTP,
+        statusCodes.UNAUTHORIZED,
+      );
+    }
+
     user.password = await getHashPassword(newPassword);
+    user.isOTPVerified = false;
+    await user.save();
+
+    return successResponse(
+      res,
+      null,
+      passwordResetSuccessMessage,
+      statusCodes.SUCCESS,
+    );
+  } catch (error) {
+    logger.error(`forgotPassword error..... ${error.message}`);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+    if (
+      !validateInput(
+        resetPasswordValidations,
+        { newPassword, confirmNewPassword },
+        res,
+      )
+    )
+      return;
+
+    if (newPassword !== confirmNewPassword) {
+      return errorResponse(
+        res,
+        new Error(passwordNotMatch),
+        passwordNotMatch,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
+
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return errorResponse(
+        res,
+        new Error(UserNotFoundMessage),
+        UserNotFoundMessage,
+        statusCodes.NOT_FOUND,
+      );
+    }
+
+    const isMatch = await comparePassword(currentPassword, user.password);
+    if (!isMatch) {
+      return errorResponse(
+        res,
+        new Error('incorrect current password'),
+        incorrectCurrentPassword,
+        statusCodes.UNAUTHORIZED,
+      );
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+
     await user.save();
 
     return successResponse(

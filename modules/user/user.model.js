@@ -38,6 +38,10 @@ const userSchema = new Schema(
       maxlength: 6,
       default: '000000',
     },
+    isOTPVerified: {
+      type: Boolean,
+      default: false,
+    },
     gender: {
       type: String,
       enum: Gender,

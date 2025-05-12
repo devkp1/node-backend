@@ -229,13 +229,47 @@
             "bearerAuth": []
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": ["email"]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OTP Sent to email",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "OTP sent successfully"
+                    },
+                    "data": {
+                      "type": "Null",
+                      "example": null
+                    }
+                  }
                 }
               }
             }
@@ -247,8 +281,21 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": "404"
+                    },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User not found"
                     }
                   }
                 }
@@ -262,8 +309,21 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 500
+                    },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Server error"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
                     }
                   }
                 }
@@ -288,11 +348,17 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address of the user"
+                  },
                   "otp": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The OTP to verify"
                   }
                 },
-                "required": ["otp"]
+                "required": ["email", "otp"]
               }
             }
           }
@@ -303,7 +369,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "OTP verified successfully"
+                    },
+                    "data": {
+                      "type": "Null",
+                      "example": null
+                    }
+                  }
                 }
               }
             }
@@ -315,8 +399,21 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 401
+                    },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Invalid or expired OTP"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid or expired OTP"
                     }
                   }
                 }
@@ -330,8 +427,167 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 500
+                    },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Server error"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "forgot-passowrd": {
+      "put": {
+        "summary": "Forgot Password",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address of the user"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "description": "The new password to set"
+                  }
+                },
+                "required": ["email", "newPassword"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password reset successfully"
+                    },
+                    "data": {
+                      "type": "Null",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "OTP not verified or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid or expired OTP"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid or expired OTP"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Server error"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
                     }
                   }
                 }
@@ -356,11 +612,24 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "passowrd": {
-                    "type": "string"
+                  "currentPassword": {
+                    "type": "string",
+                    "example": "CurrentPassword123!"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "example": "NewPassword123!"
+                  },
+                  "confirmNewPassword": {
+                    "type": "string",
+                    "example": "NewPassword123!"
                   }
                 },
-                "required": ["newPassword"]
+                "required": [
+                  "currentPassword",
+                  "newPassword",
+                  "confirmNewPassword"
+                ]
               }
             }
           }
@@ -371,7 +640,81 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password reset successfully"
+                    },
+                    "data": {
+                      "type": "Null",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password must be 8-20 characters long, include at least one uppercase letter, one lowercase letter, one digit, and one special character."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Validation Error."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Incorrect current password"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Unauthorized Error."
+                    }
+                  }
                 }
               }
             }
@@ -383,8 +726,21 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User not found"
                     }
                   }
                 }
@@ -398,8 +754,21 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 500
+                    },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Server error"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
                     }
                   }
                 }

@@ -32,3 +32,14 @@ export const loginValidations = Joi.object({
     'any.required': passwordRequiredMessage,
   }),
 });
+
+export const resetPasswordValidations = Joi.object({
+  newPassword: Joi.string().pattern(passwordRegex).required().messages({
+    'string.pattern.base': strongPasswordValidationMessage,
+    'any.required': passwordRequiredMessage,
+  }),
+  confirmNewPassword: Joi.string().pattern(passwordRegex).required().messages({
+    'string.pattern.base': strongPasswordValidationMessage,
+    'any.required': passwordRequiredMessage,
+  }),
+});

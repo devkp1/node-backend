@@ -35,3 +35,9 @@ export const StateNotFoundMessage = 'States not found.';
 export const CountriesNotFoundMessage =
   'Countries not found. Please try again later.';
 export const blackListedTokenMessage = 'Token is blacklisted';
+export const UserInfoRequiredMessage =
+  'Can not found Details, Please add user information.';
+export const passwordNotMatch =
+  'New password and confirm password do not match.';
+export const incorrectCurrentPassword = 'Current password is incorrect.';
+export const passwordResetSuccessMessage = 'Password reset successfully.';
