@@ -971,7 +971,6 @@
         "description": "Update the profile of the authenticated user",
         "requestBody": {
           "description": "Profile update details",
-          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -1009,7 +1008,7 @@
                     "description": "Profile picture to upload"
                   }
                 },
-                "required": ["fullName", "phoneNumber", "email"]
+                "required": ["email"]
               }
             }
           }

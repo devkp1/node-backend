@@ -26,6 +26,14 @@ import {
   PasswordNotMatch,
   IncorrectCurrentPassword,
   PassswordShouldNotSame,
+  InvalidCityMessage,
+  InvalidCityIDMessage,
+  InvalidStateMessage,
+  InvalidStateIDMessage,
+  InvalidCountryMessage,
+  InvalidCountryIDMessage,
+  CityStateCountryDoNotMatchMessage,
+  CityIsNotValidAsPerStateAndCountryMessage,
 } from '../../constants/errorMessages.js';
 import {
   CodeSentMessage,
@@ -47,6 +55,9 @@ import { generateOTP, sendOTPEmail } from '../../utils/otp.utils.js';
 import { checkUserExists } from '../../utils/checkUserExists.js';
 import { uploadProfilePicture } from '../../utils/uploadProfilePicture.js';
 import { blacklistedToken } from '../../utils/tokenManager.js';
+import City from '../location/models/cityModel.js';
+import State from '../location/models/stateModel.js';
+import Country from '../location/Models/countryModel.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -120,7 +131,7 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, newPassword } = req.body;
 
     const allowedFields = ['email', 'password'];
     if (!validateAllowedFields(allowedFields, req.body, res)) return next();
@@ -268,6 +279,7 @@ export const UserProfile = async (req, res) => {
       gender,
       dob,
       city,
+      state,
       country,
     } = req.body;
 
@@ -281,66 +293,138 @@ export const UserProfile = async (req, res) => {
     let user = await checkUserExists(userId, res);
     if (!user) return;
 
-    user = await userModel.findByIdAndUpdate(
-      userId,
-      {
-        phoneNumber,
-        fullName,
-        email,
-        countryCode,
-        gender,
-        dob,
-        city,
-        country,
-      },
-      {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false,
-      },
-    );
-
-    let profilePicture = user.profilePicture;
-    if (req.file) {
-      const newProfilePictureUrl = await uploadProfilePicture(req.file, res);
-      if (newProfilePictureUrl) {
-        profilePicture = newProfilePictureUrl;
-      } else {
-        return;
-      }
+    const cityDetails = await City.findById(city);
+    if (!cityDetails) {
+      return errorResponse(
+        res,
+        new Error(InvalidCityMessage),
+        InvalidCityIDMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
     }
 
-    user = await user.populate([
-      { path: 'city', select: 'name' },
-      { path: 'country', select: 'phoneCode' },
-    ]);
+    const stateDetails = await State.findById(state);
+    if (!stateDetails) {
+      return errorResponse(
+        res,
+        new Error(InvalidStateMessage),
+        InvalidStateIDMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
 
-    const updatedUser = {
-      id: user._id,
-      fullName: user.fullName,
-      phoneNumber: user.phoneNumber,
-      email: user.email,
-      gender: user.gender,
-      profilePicture: profilePicture,
-      dob: moment(user.dob).format('DD/MM/YYYY'),
-      city: {
-        id: user.city._id,
-        cityName: user.city.name,
-      },
-      country: {
-        id: user.country._id,
-        countryCode: user.country.phoneCode,
-      },
-    };
+    const countryDetails = await Country.findById(country);
+    if (!countryDetails) {
+      return errorResponse(
+        res,
+        new Error(InvalidCountryMessage),
+        InvalidCountryIDMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
 
-    await user.save();
+    if (
+      cityDetails.stateCode !== stateDetails.isoCode ||
+      stateDetails.CountryCode !== countryDetails.isoCode
+    ) {
+      return errorResponse(
+        res,
+        new Error(CityStateCountryDoNotMatchMessage),
+        CityIsNotValidAsPerStateAndCountryMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
 
-    return successResponse(
-      res,
-      updatedUser,
-      UserDataUpdatedSuccessfully,
-      statusCodes.SUCCESS,
-    );
+    try {
+      user = await userModel.findByIdAndUpdate(
+        userId,
+        {
+          phoneNumber,
+          fullName,
+          email,
+          countryCode,
+          gender,
+          dob,
+          city,
+          state,
+          country,
+        },
+        {
+          new: true,
+          runValidators: true,
+          useFindAndModify: false,
+        },
+      );
+
+      let profilePicture = user.profilePicture;
+
+      if (req.file) {
+        const newProfilePcitureUrl = await uploadPorfilePicture(req.file, res);
+        if (newPorfilePictureUrl) {
+          profilePicture = new newPorfilePictureUrl();
+        } else {
+          return;
+        }
+      }
+
+      user = await user.populate([
+        { path: 'city', select: 'name' },
+        { path: 'state', select: 'name' },
+        { path: 'country', select: 'phoneCode name' },
+      ]);
+
+      if (!user.city || !user.state || !user.country) {
+        return errorResponse(
+          res,
+          new Error(NotFoundErrorMessage),
+          UserInfoRequiredMessage,
+          statusCodes.NOT_FOUND,
+        );
+      }
+
+      const updatedUser = {
+        id: userId,
+        fullName: user.fullName,
+        phoneNumber: user.phoneNumber,
+        email: user.email,
+        gender: user.gender,
+        profilePicture: profilePicture,
+        dob: moment(user.dob).format('DD/MM/YYYY'),
+        city: {
+          id: user.city._id,
+          cityName: user.city.name,
+        },
+        state: {
+          id: user.state._id,
+          stateName: user.state.name,
+        },
+        country: {
+          id: user.country._id,
+          countryName: user.country.name,
+          countryCode: user.country.phoneCode,
+        },
+      };
+
+      await user.save();
+
+      return successResponse(
+        res,
+        updatedUser,
+        UserDataUpdatedSuccessfully,
+        statusCodes.SUCCESS,
+      );
+    } catch (error) {
+      if (error.code === 110000 && error.keyPattern && error.keyPattern.email) {
+        return errorResponse(
+          res,
+          new Error(EmailUniqueMessage),
+          EmailUniqueMessage,
+          statusCodes.VALIDATION_ERROR,
+        );
+      }
+
+      throw error;
+    }
   } catch (error) {
     logger.error(`Logout error: ${error.message}`);
     logger.error(`Update error: ${error.message}`);

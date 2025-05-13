@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import {
+  FullNameCanNotBeEmptyMessage,
   EmailRequiredMessage,
   EmailValidationMessage,
   FullNameRequiredMessage,
@@ -45,7 +46,12 @@ export const resetPasswordValidations = Joi.object({
 });
 
 export const userUpdateValidatios = Joi.object({
-  fullName: Joi.string().min(3).max(40).required(FullNameRequiredMessage),
+  fullName: Joi.string().min(3).max(40).optional().allow(null, '').messages({
+    'string.min': 'Fullname should have a minimum length of 3',
+    'string.max': 'Fullname should have a maximum length of 40',
+    'string.empty': FullNameCanNotBeEmptyMessage,
+  }),
+
   email: Joi.string().pattern(new RegExp(emailRegex)).required().messages({
     'string.pattern.base': EmailValidationMessage,
     'any.required': EmailRequiredMessage,
