@@ -24,6 +24,7 @@ import {
   UserInfoRequiredMessage,
   PasswordNotMatch,
   IncorrectCurrentPassword,
+  PassswordShouldNotSame,
 } from '../../constants/errorMessages.js';
 import {
   otpSentMessage,
@@ -372,7 +373,7 @@ export const requestOTP = async (req, res) => {
 
     await sendOTPEmail(user.email, otp);
     console.log('new otp?????????', user.otp);
-    return successResponse(res, null, otpSentMessage, statusCodes.SUCCESS);
+    return successResponse(res, undefined, otpSentMessage, statusCodes.SUCCESS);
   } catch (error) {
     logger.error(`requestOTP error....... ${error.message}`);
     return errorResponse(
@@ -405,7 +406,7 @@ export const verifyOTP = async (req, res) => {
 
     return successResponse(
       res,
-      null,
+      undefined,
       otpVerifiedSuccessfully,
       statusCodes.SUCCESS,
     );
@@ -479,10 +480,19 @@ export const resetPassword = async (req, res) => {
     )
       return;
 
+    if (newPassword === currentPassword) {
+      return errorResponse(
+        res,
+        new Error(ValidationErrorMessage),
+        PassswordShouldNotSame,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
+
     if (newPassword !== confirmNewPassword) {
       return errorResponse(
         res,
-        new Error(passwordNotMatch),
+        new Error(ValidationErrorMessage),
         passwordNotMatch,
         statusCodes.VALIDATION_ERROR,
       );
@@ -516,7 +526,7 @@ export const resetPassword = async (req, res) => {
 
     return successResponse(
       res,
-      null,
+      undefined,
       passwordResetSuccessMessage,
       statusCodes.SUCCESS,
     );
@@ -605,7 +615,7 @@ export const logoutUser = async (req, res) => {
 
     return successResponse(
       res,
-      null,
+      undefined,
       logoutSuccessMessage,
       statusCodes.SUCCESS,
     );
