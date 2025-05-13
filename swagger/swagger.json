@@ -1006,6 +1006,21 @@
                     "type": "string",
                     "format": "binary",
                     "description": "Profile picture to upload"
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "User's city",
+                    "example": "anycity"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "User's state",
+                    "example": "Anystate"
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "User's country",
+                    "example": "anycountry"
                   }
                 },
                 "required": ["email"]
