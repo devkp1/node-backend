@@ -34,6 +34,7 @@ import {
   userDataAddedSccuessfully,
   userDataUpdatedSuccessfully,
   UserDetailsGetSuccessfully,
+  logoutSuccessMessage,
 } from '../../constants/responseMessages.js';
 import { statusCodes } from '../../constants/statusCodeMessages.js';
 import { validateInput } from '../../common/validation.js';
@@ -43,6 +44,7 @@ import { validateAllowedFields } from '../../utils/checkAllowedFields.js';
 import { generateOTP, sendOTPEmail } from '../../utils/otp.utils.js';
 import { checkUserExists } from '../../utils/checkUserExists.js';
 import { uploadProfilePicture } from '../../utils/uploadProfilePicture.js';
+import { blacklistedToken } from '../../utils/tokenManager.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -561,6 +563,29 @@ export const getUserProfile = async (req, res) => {
     );
   } catch (error) {
     logger.error(`Logout error...... ${error.message}`);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};
+
+export const logoutUser = async (req, res) => {
+  try {
+    const token = req.token;
+
+    await blacklistedToken(token);
+
+    return successResponse(
+      res,
+      null,
+      logoutSuccessMessage,
+      statusCodes.SUCCESS,
+    );
+  } catch (error) {
+    logger.error(`logoutUser error......... ${error.message}`);
     return errorResponse(
       res,
       error,

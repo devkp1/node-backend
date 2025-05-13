@@ -9,6 +9,7 @@ import {
   resetPassword,
   userInfo,
   verifyOTP,
+  logoutUser,
 } from './user.controller.js';
 import { isAuthenticateUser } from '../../middleware/validateTokenHandler.js';
 import { verifyToken } from '../../middleware/verifyTokenHandler.js';
@@ -27,6 +28,7 @@ userRoute.route('/verify-otp').post(isAuthenticateUser, verifyToken, verifyOTP);
 userRoute
   .route('/reset-password')
   .put(isAuthenticateUser, verifyToken, resetPassword);
+userRoute.route('/logout').post(isAuthenticateUser, verifyToken, logoutUser);
 userRoute.route('/forgot-password').put(forgotPassword);
 userRoute
   .route('/get-user')
