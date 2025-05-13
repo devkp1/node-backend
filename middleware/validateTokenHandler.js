@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import {
-  blackListedTokenMessage,
+  BlackListedTokenMessage,
   ForbiddenErrorMessage,
   TokenErrorMessage,
 } from '../constants/errorMessages.js';

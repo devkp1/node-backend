@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import logger from '../logger.js';
 import dotenv from 'dotenv';
 import {
-  blackListedTokenMessage,
+  BlackListedTokenMessage,
   InvalidTokenErrorMessage,
   ValidationErrorMessage,
 } from '../constants/errorMessages.js';
