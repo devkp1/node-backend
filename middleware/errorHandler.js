@@ -8,7 +8,7 @@ import {
 import { errorResponse } from '../utils/responseHandler.js';
 import { statusCodes } from '../constants/statusCodeMessages.js';
 import logger from '../logger.js';
-import { errorMessage } from '../constants/responseMessages.js';
+import { ErrorMessage } from '../constants/responseMessages.js';
 const { VALIDATION_ERROR, UNAUTHORIZED, SERVER_ERROR, FORBIDDEN, NOT_FOUND } =
   statusCodes;
 
@@ -69,7 +69,7 @@ export const errorHandler = (err, req, res, next) => {
       break;
 
     default:
-      errorMessage(
+      ErrorMessage(
         res,
         err.messsage,
         ServerErrorMessage,

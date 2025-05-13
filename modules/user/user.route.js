@@ -5,10 +5,10 @@ import {
   forgotPassword,
   loginUser,
   registerUser,
-  requestOTP,
+  requestCode,
   resetPassword,
   userInfo,
-  verifyOTP,
+  verifyCode,
   logoutUser,
 } from './user.controller.js';
 import { isAuthenticateUser } from '../../middleware/validateTokenHandler.js';
@@ -22,9 +22,11 @@ userRoute
   .route('/add-user-info')
   .put(isAuthenticateUser, verifyToken, userInfo);
 userRoute
-  .route('/request-otp')
-  .post(isAuthenticateUser, verifyToken, requestOTP);
-userRoute.route('/verify-otp').post(isAuthenticateUser, verifyToken, verifyOTP);
+  .route('/request-code')
+  .post(isAuthenticateUser, verifyToken, requestCode);
+userRoute
+  .route('/verify-code')
+  .post(isAuthenticateUser, verifyToken, verifyCode);
 userRoute
   .route('/reset-password')
   .put(isAuthenticateUser, verifyToken, resetPassword);

@@ -5,7 +5,7 @@ import {
   StateNotFoundMessage,
   ValidationErrorMessage,
 } from '../../../constants/errorMessages.js';
-import { stateGetSuccessfully } from '../../../constants/responseMessages.js';
+import { StateGetSuccessfully } from '../../../constants/responseMessages.js';
 import { statusCodes } from '../../../constants/statusCodeMessages.js';
 import {
   errorResponse,
@@ -52,7 +52,7 @@ export const getStatesByCountryCode = async (req, res) => {
     return successResponse(
       res,
       formattedStates,
-      stateGetSuccessfully,
+      StateGetSuccessfully,
       statusCodes.SUCCESS,
     );
   } catch (error) {

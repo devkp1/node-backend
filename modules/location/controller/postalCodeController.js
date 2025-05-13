@@ -5,7 +5,7 @@ import {
   ServerErrorMessage,
   ValidationErrorMessage,
 } from '../../../constants/errorMessages.js';
-import { postalCodeGetSuccessfully } from '../../../constants/responseMessages.js';
+import { PostalCodeGetSuccessfully } from '../../../constants/responseMessages.js';
 import { statusCodes } from '../../../constants/statusCodeMessages.js';
 import {
   errorResponse,

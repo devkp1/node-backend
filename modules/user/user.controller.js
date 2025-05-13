@@ -28,15 +28,15 @@ import {
   PassswordShouldNotSame,
 } from '../../constants/errorMessages.js';
 import {
-  otpSentMessage,
-  otpVerifiedSuccessfully,
-  passwordResetSuccessMessage,
-  userRegisterMessage,
-  userLoginMessage,
-  userDataAddedSccuessfully,
-  userDataUpdatedSuccessfully,
+  CodeSentMessage,
+  CodeVerifiedSuccessfully,
+  PasswordResetSuccessMessage,
+  UserRegisterMessage,
+  UserLoginMessage,
+  UserDataAddedSccuessfully,
+  UserDataUpdatedSuccessfully,
   UserDetailsGetSuccessfully,
-  logoutSuccessMessage,
+  LogoutSuccessMessage,
 } from '../../constants/responseMessages.js';
 import { statusCodes } from '../../constants/statusCodeMessages.js';
 import { validateInput } from '../../common/validation.js';
@@ -94,7 +94,7 @@ export const registerUser = async (req, res) => {
     return successResponse(
       res,
       updatedUser,
-      userRegisterMessage,
+      UserRegisterMessage,
       statusCodes.SUCCESS,
     );
   } catch (error) {
@@ -167,7 +167,7 @@ export const loginUser = async (req, res, next) => {
     return successResponse(
       res,
       { id: user._id, accessToken },
-      userLoginMessage,
+      UserLoginMessage,
       statusCodes.SUCCESS,
     );
   } catch (error) {
@@ -243,7 +243,7 @@ export const userInfo = async (req, res) => {
     return successResponse(
       res,
       updatedUser,
-      userDataAddedSccuessfully,
+      UserDataAddedSccuessfully,
       statusCodes.SUCCESS,
     );
   } catch (error) {
@@ -272,7 +272,7 @@ export const UserProfile = async (req, res) => {
     } = req.body;
 
     const isValid = validateInput(
-      userUpdateValidations,
+      UserUpdateValidations,
       { fullName, email },
       res,
     );
@@ -338,7 +338,7 @@ export const UserProfile = async (req, res) => {
     return successResponse(
       res,
       updatedUser,
-      userDataUpdatedSuccessfully,
+      UserDataUpdatedSuccessfully,
       statusCodes.SUCCESS,
     );
   } catch (error) {
@@ -353,7 +353,7 @@ export const UserProfile = async (req, res) => {
   }
 };
 
-export const requestOTP = async (req, res) => {
+export const requestCode = async (req, res) => {
   try {
     const userEmail = req.body.email;
     const user = await userModel.findByOne({ email: userEmail });
@@ -376,7 +376,12 @@ export const requestOTP = async (req, res) => {
 
     await sendOTPEmail(user.email, otp);
     console.log('new otp?????????', user.otp);
-    return successResponse(res, undefined, otpSentMessage, statusCodes.SUCCESS);
+    return successResponse(
+      res,
+      undefined,
+      CodeSentMessage,
+      statusCodes.SUCCESS,
+    );
   } catch (error) {
     logger.error(`requestOTP error....... ${error.message}`);
     return errorResponse(
@@ -388,7 +393,7 @@ export const requestOTP = async (req, res) => {
   }
 };
 
-export const verifyOTP = async (req, res) => {
+export const verifyCode = async (req, res) => {
   try {
     const { email, otp } = req.body;
 
@@ -410,7 +415,7 @@ export const verifyOTP = async (req, res) => {
     return successResponse(
       res,
       undefined,
-      otpVerifiedSuccessfully,
+      CodeVerifiedSuccessfully,
       statusCodes.SUCCESS,
     );
   } catch (error) {
@@ -455,7 +460,7 @@ export const forgotPassword = async (req, res) => {
     return successResponse(
       res,
       null,
-      passwordResetSuccessMessage,
+      PasswordResetSuccessMessage,
       statusCodes.SUCCESS,
     );
   } catch (error) {
@@ -496,7 +501,7 @@ export const resetPassword = async (req, res) => {
       return errorResponse(
         res,
         new Error(ValidationErrorMessage),
-        passwordNotMatch,
+        PasswordNotMatch,
         statusCodes.VALIDATION_ERROR,
       );
     }
@@ -516,7 +521,7 @@ export const resetPassword = async (req, res) => {
       return errorResponse(
         res,
         new Error('incorrect current password'),
-        incorrectCurrentPassword,
+        IncorrectCurrentPassword,
         statusCodes.UNAUTHORIZED,
       );
     }
@@ -530,7 +535,7 @@ export const resetPassword = async (req, res) => {
     return successResponse(
       res,
       undefined,
-      passwordResetSuccessMessage,
+      PasswordResetSuccessMessage,
       statusCodes.SUCCESS,
     );
   } catch (error) {
@@ -619,7 +624,7 @@ export const logoutUser = async (req, res) => {
     return successResponse(
       res,
       undefined,
-      logoutSuccessMessage,
+      LogoutSuccessMessage,
       statusCodes.SUCCESS,
     );
   } catch (error) {

@@ -3,7 +3,7 @@ import {
   NotFoundErrorMessage,
   ServerErrorMessage,
 } from '../../../constants/errorMessages.js';
-import { countryGetSuccessfully } from '../../../constants/responseMessages.js';
+import { CountryGetSuccessfully } from '../../../constants/responseMessages.js';
 import { statusCodes } from '../../../constants/statusCodeMessages.js';
 import logger from '../../../logger.js';
 import {
@@ -36,7 +36,7 @@ export const getAllCountries = async (req, res) => {
     return successResponse(
       res,
       formattedCountries,
-      countryGetSuccessfully,
+      CountryGetSuccessfully,
       statusCodes.SUCCESS,
     );
   } catch (error) {

@@ -7,7 +7,7 @@ import {
   StateNotFoundMessage,
   CountriesNotFoundMessage,
 } from '../../../constants/errorMessages.js';
-import { cityGetSuccessfully } from '../../../constants/responseMessages.js';
+import { CityGetSuccessfully } from '../../../constants/responseMessages.js';
 import { statusCodes } from '../../../constants/statusCodeMessages.js';
 import logger from '../../../logger.js';
 import {
@@ -95,7 +95,7 @@ export const getCitiesByStateCode = async (req, res) => {
     return successResponse(
       res,
       responsePayload,
-      cityGetSuccessfully,
+      CityGetSuccessfully,
       statusCodes.SUCCESS,
     );
   } catch (error) {

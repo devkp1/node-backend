@@ -26,8 +26,8 @@ export const verifyToken = (req, res, next) => {
   if (isTokenBlackListed(token)) {
     return errorResponse(
       res,
-      new Error('Token is blacklisted'),
-      blackListedTokenMessage,
+      new Error('Authorizatin failed! Token expired'),
+      BlackListedTokenMessage,
       statusCodes.UNAUTHORIZED,
     );
   }

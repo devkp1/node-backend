@@ -1,4 +1,4 @@
-import { errorMessage, successMessage } from '../constants/responseMessages.js';
+import { ErrorMessage, SuccessMessage } from '../constants/responseMessages.js';
 import { statusCodes } from '../constants/statusCodeMessages.js';
 
 const successResponse = (

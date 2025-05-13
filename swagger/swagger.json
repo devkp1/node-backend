@@ -281,9 +281,9 @@
         ]
       }
     },
-    "/requst-otp": {
+    "/requst-code": {
       "post": {
-        "summary": "Request OTP",
+        "summary": "Request Code",
         "security": [
           {
             "bearerAuth": []
@@ -307,7 +307,7 @@
         },
         "responses": {
           "200": {
-            "description": "OTP Sent to email",
+            "description": "Code Sent to email",
             "content": {
               "application/json": {
                 "schema": {
@@ -323,7 +323,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "OTP sent successfully"
+                      "example": "Code sent successfully"
                     },
                     "data": {
                       "type": "Null",
@@ -393,9 +393,9 @@
         }
       }
     },
-    "/verify-otp": {
+    "/verify-code": {
       "post": {
-        "summary": "Verify OTP",
+        "summary": "Verify Code",
         "security": [
           {
             "bearerAuth": []
@@ -413,19 +413,19 @@
                     "format": "email",
                     "description": "The email address of the user"
                   },
-                  "otp": {
+                  "code": {
                     "type": "string",
-                    "description": "The OTP to verify"
+                    "description": "The Code to verify"
                   }
                 },
-                "required": ["email", "otp"]
+                "required": ["email", "Code"]
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OTP verified successfully",
+            "description": "Code verified successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -441,7 +441,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "OTP verified successfully"
+                      "example": "Code verified successfully"
                     },
                     "data": {
                       "type": "Null",
@@ -453,7 +453,7 @@
             }
           },
           "401": {
-            "description": "Inavalid or expired OTP",
+            "description": "Inavalid or expired Code",
             "content": {
               "application/json": {
                 "schema": {
@@ -469,11 +469,11 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Invalid or expired OTP"
+                      "example": "Invalid or expired Code"
                     },
                     "error": {
                       "type": "string",
-                      "example": "Invalid or expired OTP"
+                      "example": "Invalid or expired Code"
                     }
                   }
                 }
@@ -599,7 +599,7 @@
             }
           },
           "401": {
-            "description": "OTP not verified or invalid",
+            "description": "Code not verified or invalid",
             "content": {
               "application/json": {
                 "schema": {
@@ -615,11 +615,11 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Invalid or expired OTP"
+                      "example": "Invalid or expired Code"
                     },
                     "error": {
                       "type": "string",
-                      "example": "Invalid or expired OTP"
+                      "example": "Invalid or expired Code"
                     }
                   }
                 }
