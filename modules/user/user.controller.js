@@ -26,14 +26,6 @@ import {
   PasswordNotMatch,
   IncorrectCurrentPassword,
   PassswordShouldNotSame,
-  InvalidCityMessage,
-  InvalidCityIDMessage,
-  InvalidStateMessage,
-  InvalidStateIDMessage,
-  InvalidCountryMessage,
-  InvalidCountryIDMessage,
-  CityStateCountryDoNotMatchMessage,
-  CityIsNotValidAsPerStateAndCountryMessage,
 } from '../../constants/errorMessages.js';
 import {
   CodeSentMessage,
@@ -55,9 +47,7 @@ import { generateOTP, sendOTPEmail } from '../../utils/otp.utils.js';
 import { checkUserExists } from '../../utils/checkUserExists.js';
 import { uploadProfilePicture } from '../../utils/uploadProfilePicture.js';
 import { blacklistedToken } from '../../utils/tokenManager.js';
-import City from '../location/models/cityModel.js';
-import State from '../location/models/stateModel.js';
-import Country from '../location/Models/countryModel.js';
+import { checkCityStateCountryValidity } from '../../utils/checkCityStateCountryValidity.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -293,47 +283,16 @@ export const UserProfile = async (req, res) => {
     let user = await checkUserExists(userId, res);
     if (!user) return;
 
-    const cityDetails = await City.findById(city);
-    if (!cityDetails) {
-      return errorResponse(
-        res,
-        new Error(InvalidCityMessage),
-        InvalidCityIDMessage,
-        statusCodes.VALIDATION_ERROR,
-      );
-    }
+    const validationResponse = await checkCityStateCountryValidity(
+      city,
+      state,
+      country,
+      res,
+    );
+    if (!validationResponse) return;
 
-    const stateDetails = await State.findById(state);
-    if (!stateDetails) {
-      return errorResponse(
-        res,
-        new Error(InvalidStateMessage),
-        InvalidStateIDMessage,
-        statusCodes.VALIDATION_ERROR,
-      );
-    }
-
-    const countryDetails = await Country.findById(country);
-    if (!countryDetails) {
-      return errorResponse(
-        res,
-        new Error(InvalidCountryMessage),
-        InvalidCountryIDMessage,
-        statusCodes.VALIDATION_ERROR,
-      );
-    }
-
-    if (
-      cityDetails.stateCode !== stateDetails.isoCode ||
-      stateDetails.CountryCode !== countryDetails.isoCode
-    ) {
-      return errorResponse(
-        res,
-        new Error(CityStateCountryDoNotMatchMessage),
-        CityIsNotValidAsPerStateAndCountryMessage,
-        statusCodes.VALIDATION_ERROR,
-      );
-    }
+    // eslint-disable-next-line
+    const { cityDetails, stateDetails, countryDetails } = validationResponse;
 
     try {
       user = await userModel.findByIdAndUpdate(
@@ -359,9 +318,9 @@ export const UserProfile = async (req, res) => {
       let profilePicture = user.profilePicture;
 
       if (req.file) {
-        const newProfilePcitureUrl = await uploadPorfilePicture(req.file, res);
-        if (newPorfilePictureUrl) {
-          profilePicture = new newPorfilePictureUrl();
+        const newProfilePictureUrl = await uploadProfilePicture(req.file, res);
+        if (newProfilePictureUrl) {
+          profilePicture = new newProfilePictureUrl();
         } else {
           return;
         }
