@@ -1,53 +1,53 @@
 import Joi from 'joi';
 import {
-  emailRequiredMessage,
-  emailValidationMessage,
-  fullNameRequiredMessage,
-  passwordRequiredMessage,
-  strongPasswordValidationMessage,
+  EmailRequiredMessage,
+  EmailValidationMessage,
+  FullNameRequiredMessage,
+  PasswordRequiredMessage,
+  StrongPasswordValidationMessage,
 } from '../constants/errorMessages.js';
 import { emailRegex, passwordRegex } from '../constants/regexConstants.js';
 
 export const userValidations = Joi.object({
-  fullName: Joi.string().min(3).max(40).required(fullNameRequiredMessage),
+  fullName: Joi.string().min(3).max(40).required(FullNameRequiredMessage),
   email: Joi.string().pattern(new RegExp(emailRegex)).required().messages({
-    'string.pattern.base': emailValidationMessage,
-    'any.required': emailRequiredMessage,
+    'string.pattern.base': EmailValidationMessage,
+    'any.required': EmailRequiredMessage,
   }),
   password: Joi.string()
     .pattern(new RegExp(passwordRegex))
     .required()
     .messages({
-      'string.pattrn.base': strongPasswordValidationMessage,
-      'any.required': passwordRequiredMessage,
+      'string.pattrn.base': StrongPasswordValidationMessage,
+      'any.required': PasswordRequiredMessage,
     }),
 });
 
 export const loginValidations = Joi.object({
   email: Joi.string().pattern(new RegExp(emailRegex)).required().messages({
-    'string.pattern.base': emailValidationMessage,
-    'any.required': emailRequiredMessage,
+    'string.pattern.base': EmailValidationMessage,
+    'any.required': EmailRequiredMessage,
   }),
   password: Joi.string().required().messages({
-    'any.required': passwordRequiredMessage,
+    'any.required': PasswordRequiredMessage,
   }),
 });
 
 export const resetPasswordValidations = Joi.object({
   newPassword: Joi.string().pattern(passwordRegex).required().messages({
-    'string.pattern.base': strongPasswordValidationMessage,
-    'any.required': passwordRequiredMessage,
+    'string.pattern.base': StrongPasswordValidationMessage,
+    'any.required': PasswordRequiredMessage,
   }),
   confirmNewPassword: Joi.string().pattern(passwordRegex).required().messages({
-    'string.pattern.base': strongPasswordValidationMessage,
-    'any.required': passwordRequiredMessage,
+    'string.pattern.base': StrongPasswordValidationMessage,
+    'any.required': PasswordRequiredMessage,
   }),
 });
 
 export const userUpdateValidatios = Joi.object({
-  fullName: Joi.string().min(3).max(40).required(fullNameRequiredMessage),
+  fullName: Joi.string().min(3).max(40).required(FullNameRequiredMessage),
   email: Joi.string().pattern(new RegExp(emailRegex)).required().messages({
-    'string.pattern.base': emailValidationMessage,
-    'any.required': emailRequiredMessage,
+    'string.pattern.base': EmailValidationMessage,
+    'any.required': EmailRequiredMessage,
   }),
 });

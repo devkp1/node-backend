@@ -1,11 +1,11 @@
-export const fullNameRequiredMessage = 'Name is required.';
-export const emailRequiredMessage = 'Email is required.';
-export const passwordRequiredMessage = 'Password is required.';
-export const emailUniqueMessage = 'Email already exists.';
-export const emailValidationMessage = 'Please enter a valid email address.';
-export const strongPasswordValidationMessage =
+export const FullNameRequiredMessage = 'Name is required.';
+export const EmailRequiredMessage = 'Email is required.';
+export const PasswordRequiredMessage = 'Password is required.';
+export const EmailUniqueMessage = 'Email already exists.';
+export const EmailValidationMessage = 'Please enter a valid email address.';
+export const StrongPasswordValidationMessage =
   'Password must be 8-20 characters long, include at least one upppercase letter, one lowercase letter, one digit, and one special character.';
-export const joiValidationMessage = 'Wrong validation.';
+export const JoiValidationMessage = 'Wrong validation.';
 export const ValidationErrorMessage = 'Validation Error.';
 export const NotFoundErrorMessage = 'Not found.';
 export const UnauthroizedErrorMessage = 'Unauthroized!';
@@ -16,7 +16,7 @@ export const EmailPasswordMatchMessage =
 export const EmailAndPasswordRequiredMessage =
   'Email and password are required.';
 export const UserNotFoundMessage = 'User not found.';
-export const phoneNumberUniqueMessge = 'Phone Number should be unique.';
+export const PhoneNumberUniqueMessge = 'Phone Number should be unique.';
 export const TokenErrorMessage = 'Please login to access this resources.';
 export const InvalidTokenErrorMessage = 'Invlaid Token.';
 export const AdditionalFeildsErrorMessage =
@@ -37,9 +37,9 @@ export const CountriesNotFoundMessage =
 export const blackListedTokenMessage = 'Token is blacklisted';
 export const UserInfoRequiredMessage =
   'Can not found Details, Please add user information.';
-export const passwordNotMatch =
+export const PasswordNotMatch =
   'New password and confirm password do not match.';
-export const incorrectCurrentPassword = 'Current password is incorrect.';
-export const passwordResetSuccessMessage = 'Password reset successfully.';
+export const IncorrectCurrentPassword = 'Current password is incorrect.';
+export const PasswordResetSuccessMessage = 'Password reset successfully.';
 export const ImageUploadErrorMessage =
   'Provided Image file is not valid, Only JPG, PNG Image is Applicable';

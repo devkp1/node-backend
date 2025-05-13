@@ -1,6 +1,5 @@
 import userModel from './user.model.js';
 import bcrypt from 'bcryptjs';
-import cloudinary from '../../config/imageConfig/cloudinary.config.js';
 import moment from 'moment';
 import { successResponse, errorResponse } from '../../utils/responseHandler.js';
 import {
@@ -20,11 +19,11 @@ import {
   NotFoundErrorMessage,
   UnauthroizedErrorMessage,
   ValidationErrorMessage,
-  emailUniqueMessage,
+  EmailUniqueMessage,
   InvalidOrExpireOTP,
   UserInfoRequiredMessage,
-  passwordNotMatch,
-  incorrectCurrentPassword,
+  PasswordNotMatch,
+  IncorrectCurrentPassword,
 } from '../../constants/errorMessages.js';
 import {
   otpSentMessage,
@@ -96,11 +95,11 @@ export const registerUser = async (req, res) => {
     );
   } catch (error) {
     if (error.code === 11000 && error.keyValue.email) {
-      logger.error(`Registration error: ${emailUniqueMessage}`);
+      logger.error(`Registration error: ${EmailUniqueMessage}`);
       return errorResponse(
         res,
         new Error(ValidationErrorMessage),
-        emailUniqueMessage,
+        EmailUniqueMessage,
         statusCodes.VALIDATION_ERROR,
       );
     }

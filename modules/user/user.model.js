@@ -1,10 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 import { UserModelSchema } from '../../constants/modelNameConstants.js';
 import {
-  emailRequiredMessage,
-  emailUniqueMessage,
-  fullNameRequiredMessage,
-  passwordRequiredMessage,
+  EmailRequiredMessage,
+  EmailUniqueMessage,
+  FullNameRequiredMessage,
+  PasswordRequiredMessage,
 } from '../../constants/errorMessages.js';
 import { Gender } from '../../enums/userEnum.js';
 
@@ -12,7 +12,7 @@ const userSchema = new Schema(
   {
     fullName: {
       type: String,
-      required: [true, fullNameRequiredMessage],
+      required: [true, FullNameRequiredMessage],
     },
     countryCode: {
       type: Number,
@@ -24,15 +24,15 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      required: [true, emailRequiredMessage],
-      unqiue: [true, emailUniqueMessage],
+      required: [true, EmailRequiredMessage],
+      unqiue: [true, EmailUniqueMessage],
     },
     dob: {
       type: Date,
     },
     password: {
       type: String,
-      required: [true, passwordRequiredMessage],
+      required: [true, PasswordRequiredMessage],
     },
     otp: {
       type: String,
