@@ -256,7 +256,16 @@ export const userInfo = async (req, res) => {
 export const UserProfile = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const { fullName, phoneNumber, email, countryCode, gender, dob } = req.body;
+    const {
+      fullName,
+      phoneNumber,
+      email,
+      countryCode,
+      gender,
+      dob,
+      city,
+      country,
+    } = req.body;
 
     const isValid = validateInput(
       userUpdateValidations,
@@ -277,6 +286,8 @@ export const UserProfile = async (req, res) => {
         countryCode,
         gender,
         dob,
+        city,
+        country,
       },
       {
         new: true,
@@ -529,16 +540,26 @@ export const getUserProfile = async (req, res) => {
 
     const userDetails = await userModel
       .findById(
-        user._id,
+        userId,
         'fullName countryCode phoneNumber email gender dob city country profilePicture',
       )
       .populate([
         { path: 'city', select: 'name' },
+        { path: 'state', select: 'name' },
         { path: 'country', select: 'phoneCode' },
       ]);
 
+    if (!userDetails.city || !userDetails.state || !userDetails.country) {
+      return errorResponse(
+        res,
+        new Error(NotFoundErrorMessage),
+        UserInfoRequiredMessage,
+        statusCodes.NOT_FOUND,
+      );
+    }
+
     const formattedUser = {
-      id: user._id,
+      id: userId,
       fullName: userDetails.fullName,
       phoneNumber: userDetails.phoneNumber,
       email: userDetails.email,
@@ -548,6 +569,10 @@ export const getUserProfile = async (req, res) => {
       city: {
         id: userDetails.city._id,
         cityName: userDetails.country.phoneCode,
+      },
+      state: {
+        id: user.state._id,
+        stateName: userDetails.state.name,
       },
       country: {
         id: userDetails.country._id,
