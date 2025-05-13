@@ -7,6 +7,7 @@ import {
   comparePassword,
 } from '../../utils/password.utils.js';
 import {
+  forgotPasswordValidations,
   userValidations,
   loginValidations,
   resetPasswordValidations,
@@ -136,6 +137,8 @@ export const loginUser = async (req, res, next) => {
         statusCodes.VALIDATION_ERROR,
       );
     }
+
+    if (!validateInput(forgotPasswordValidations, { newPassword }, res)) return;
 
     const user = await userModel.findOne({ email });
 

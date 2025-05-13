@@ -51,3 +51,10 @@ export const userUpdateValidatios = Joi.object({
     'any.required': EmailRequiredMessage,
   }),
 });
+
+export const forgotPasswordValidations = Joi.object({
+  newPassword: Joi.string().pattern(passwordRegex).required().messages({
+    'string.pattern.base': StrongPasswordValidationMessage,
+    'any.required': PasswordRequiredMessage,
+  }),
+});
