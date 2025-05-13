@@ -20,47 +20,60 @@ export const checkCityStateCountryValidity = async (
   country,
   res,
 ) => {
-  const cityDetails = await City.findById(city);
-  if (!cityDetails) {
-    return errorResponse(
-      res,
-      new Error(InvalidCityMessage),
-      InvalidCityIDMessage,
-      statusCodes.VALIDATION_ERROR,
-    );
+  if (city) {
+    const cityDetails = await City.findById(city);
+    if (!cityDetails) {
+      return errorResponse(
+        res,
+        new Error(InvalidCityMessage),
+        InvalidCityIDMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
   }
 
-  const stateDetails = await State.findById(state);
-  if (!stateDetails) {
-    return errorResponse(
-      res,
-      new Error(InvalidStateMessage),
-      InvalidStateIDMessage,
-      statusCodes.VALIDATION_ERROR,
-    );
+  if (state) {
+    const stateDetails = await State.findById(state);
+    if (!stateDetails) {
+      return errorResponse(
+        res,
+        new Error(InvalidStateMessage),
+        InvalidStateIDMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
   }
 
-  const countryDetails = await Country.findById(country);
-  if (!countryDetails) {
-    return errorResponse(
-      res,
-      new Error(InvalidCountryMessage),
-      InvalidCountryIDMessage,
-      statusCodes.VALIDATION_ERROR,
-    );
+  if (country) {
+    const countryDetails = await Country.findById(country);
+    if (!countryDetails) {
+      return errorResponse(
+        res,
+        new Error(InvalidCountryMessage),
+        InvalidCountryIDMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
   }
 
-  if (
-    cityDetails.stateCode !== stateDetails.isoCode ||
-    stateDetails.countryCode !== countryDetails.isoCode
-  ) {
+  if (stateDetails.countryCode !== countryDetails.isoCode) {
     return errorResponse(
       res,
       new Error(CityStateCountryDoNotMatchMessage),
       CityIsNotValidAsPerStateAndCountryMessage,
       statusCodes.VALIDATION_ERROR,
     );
+  } else if (country) {
+    const countryDetails = await Country.findById(country);
+    if (!countryDetails) {
+      return errorResponse(
+        res,
+        new Error(InvalidCountryMessage),
+        InvalidCountryIDMessage,
+        statusCodes.VALIDATION_ERROR,
+      );
+    }
   }
 
-  return { cityDetails, stateDetails, countryDetails };
+  return true;
 };
