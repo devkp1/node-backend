@@ -23,3 +23,6 @@
 2025-05-08T12:57:06.792Z [31merror[39m: State with code GJ not found 
 2025-05-08T13:00:51.421Z [31merror[39m: Location populate error: country is not defined 
 2025-05-12T13:08:13.132Z [31merror[39m: JWT verification error: jwt expired 
+2025-05-14T06:02:49.923Z [31merror[39m: Registration error: errorMessage is not defined 
+2025-05-14T06:02:49.949Z [31merror[39m: errorMessage is not defined - POST /api/v1/register-user - ::1 
+2025-05-14T06:02:49.950Z [31merror[39m: errorMessage is not defined 

@@ -4,11 +4,11 @@ import { statusCodes } from '../constants/statusCodeMessages.js';
 const successResponse = (
   res,
   data,
-  message = successMessage,
+  message = SuccessMessage,
   statusCode = statusCodes.SUCCESS,
 ) => {
   res.status(statusCode).json({
-    status: successMessage,
+    status: SuccessMessage,
     statusCode: statusCode,
     message,
     data,
@@ -18,11 +18,11 @@ const successResponse = (
 const errorResponse = (
   res,
   error,
-  message = errorMessage,
+  message = ErrorMessage,
   statusCode = statusCodes.SERVER_ERROR,
 ) => {
   res.status(statusCode).json({
-    status: errorMessage,
+    status: ErrorMessage,
     statusCode: statusCode,
     message,
     error: error.message || error,
