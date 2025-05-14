@@ -56,3 +56,9 @@ export const CityStateCountryDoNotMatchMessage =
   'City, state, and country do not match.';
 export const CityIsNotValidAsPerStateAndCountryMessage =
   'The provided city does not belong to the provided state and country';
+export const UpdateStateAndCityMessage =
+  'Please update both state and city when updating country';
+export const UpdateCountryAndCityMessage =
+  'Please update both country and city when updating state';
+export const UpdateCountryAndStateMessage =
+  'Please update both country and state when updating city';
