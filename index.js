@@ -12,12 +12,14 @@ import { setUpLogger } from './config/initial/setupLogging.js';
 import { setupGracefulShutdown } from './config/initial/shutdown.js';
 import { setupSwagger } from './config/initial/swagger.js';
 import { populateDatabase } from './utils/populateLocationDatabase.js';
+import { rateLimiters } from './middleware/rateLimiter.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
 
 app.use(helmet());
+app.use(rateLimiters);
 
 populateDatabase();
 
