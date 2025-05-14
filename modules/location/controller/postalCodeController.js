@@ -52,7 +52,7 @@ export const getPostalCodeByLocation = async (req, res) => {
     return successResponse(
       res,
       formattedPostalCode,
-      postalCodeGetSuccessfully,
+      PostalCodeGetSuccessfully,
       statusCodes.SUCCESS,
     );
   } catch (error) {

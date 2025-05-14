@@ -26,3 +26,4 @@
 2025-05-14T06:02:49.923Z [31merror[39m: Registration error: errorMessage is not defined 
 2025-05-14T06:02:49.949Z [31merror[39m: errorMessage is not defined - POST /api/v1/register-user - ::1 
 2025-05-14T06:02:49.950Z [31merror[39m: errorMessage is not defined 
+2025-05-14T06:38:50.616Z [31merror[39m: Location populate error: getaddrinfo ENOTFOUND ac-pocnr3s-shard-00-00.avw2isp.mongodb.net 

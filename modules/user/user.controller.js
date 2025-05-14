@@ -126,11 +126,15 @@ export const loginUser = async (req, res, next) => {
     const allowedFields = ['email', 'password'];
     if (!validateAllowedFields(allowedFields, req.body, res)) return next();
 
-    const isValid = validateInput(loginValidations, { email, password }, res);
+    const isValid = validateInput(
+      loginValidations,
+      { email, newPassword },
+      res,
+    );
 
     if (!isValid) return;
 
-    if (!email || !password) {
+    if (!email || !newPassword) {
       return errorResponse(
         res,
         new Error(ValidationErrorMessage),
@@ -152,7 +156,7 @@ export const loginUser = async (req, res, next) => {
       );
     }
 
-    const isPasswordMatch = await comparePassword(password, user.password);
+    const isPasswordMatch = await comparePassword(newPassword, user.password);
 
     if (!isPasswordMatch) {
       return errorResponse(
