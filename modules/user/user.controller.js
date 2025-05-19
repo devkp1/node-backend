@@ -403,7 +403,7 @@ export const UserProfile = async (req, res) => {
 export const requestCode = async (req, res) => {
   try {
     const userEmail = req.body.email;
-    const user = await userModel.findByOne({ email: userEmail });
+    const user = await userModel.findOne({ email: userEmail });
     if (!user) {
       return errorResponse(
         res,
@@ -423,12 +423,7 @@ export const requestCode = async (req, res) => {
 
     await sendOTPEmail(user.email, otp);
     console.log('new otp?????????', user.otp);
-    return successResponse(
-      res,
-      undefined,
-      CodeSentMessage,
-      statusCodes.SUCCESS,
-    );
+    return successResponse(res, otp, CodeSentMessage, statusCodes.SUCCESS);
   } catch (error) {
     logger.error(`requestOTP error....... ${error.message}`);
     return errorResponse(
@@ -442,10 +437,10 @@ export const requestCode = async (req, res) => {
 
 export const verifyCode = async (req, res) => {
   try {
-    const { email, otp } = req.body;
+    const { email, code } = req.body;
 
-    const user = await userModel.findByOne({ email });
-    if (!user || user.otp != otp || moment().isAfter(user.otpExpires)) {
+    const user = await userModel.findOne({ email });
+    if (!user || user.code != code || moment().isAfter(user.otpExpires)) {
       return errorResponse(
         res,
         new Error(InvalidOrExpireOTP),
@@ -454,7 +449,7 @@ export const verifyCode = async (req, res) => {
       );
     }
 
-    user.otp = undefined;
+    user.code = undefined;
     user.otpExpires = undefined;
     user.isOTPVerified = true;
     await user.save();

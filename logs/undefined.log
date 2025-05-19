@@ -27,3 +27,38 @@
 2025-05-14T06:02:49.949Z [31merror[39m: errorMessage is not defined - POST /api/v1/register-user - ::1 
 2025-05-14T06:02:49.950Z [31merror[39m: errorMessage is not defined 
 2025-05-14T06:38:50.616Z [31merror[39m: Location populate error: getaddrinfo ENOTFOUND ac-pocnr3s-shard-00-00.avw2isp.mongodb.net 
+2025-05-19T10:45:56.820Z [31merror[39m: JWT verification error: jwt expired 
+2025-05-19T10:47:10.661Z [31merror[39m: requestOTP error....... Cannot read properties of undefined (reading 'email') 
+2025-05-19T10:49:53.352Z [31merror[39m: requestOTP error....... Cannot read properties of undefined (reading 'email') 
+2025-05-19T10:50:31.343Z [31merror[39m: requestOTP error....... userModel.findByOne is not a function 
+2025-05-19T10:54:15.812Z [31merror[39m: requestOTP error....... userModel.findByOne is not a function 
+2025-05-19T10:54:37.880Z [31merror[39m: requestOTP error....... userModel.findByOne is not a function 
+2025-05-19T11:01:04.432Z [31merror[39m: requestOTP error....... User.findByOne is not a function 
+2025-05-19T11:04:01.413Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-231d4ac93b3sm57666895ad.4 - gsmtp 
+2025-05-19T11:07:30.186Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-742a970d75csm6178074b3a.69 - gsmtp 
+2025-05-19T11:09:06.129Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-231d4ed5737sm56791895ad.239 - gsmtp 
+2025-05-19T11:30:49.814Z [31merror[39m: authUser error....... : Cannot destructure property 'email' of 'req.body' as it is undefined. 
+2025-05-19T11:31:07.255Z [31merror[39m: authUser error....... : Cannot access 'user' before initialization 
+2025-05-19T11:31:35.175Z [31merror[39m: authUser error....... : Cannot access 'user' before initialization 
+2025-05-19T11:32:43.346Z [31merror[39m: authUser error....... : Cannot access 'user' before initialization 
+2025-05-19T11:38:42.202Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-742a9860d46sm5962995b3a.127 - gsmtp 
+2025-05-19T11:41:16.268Z [31merror[39m: JWT verification error: jwt expired 
+2025-05-19T11:41:57.351Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-742a970b7bcsm6165505b3a.52 - gsmtp 
+2025-05-19T11:46:30.119Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-231d4ebac09sm57242845ad.184 - gsmtp 
+2025-05-19T11:57:27.969Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-742a9829bb3sm6181878b3a.100 - gsmtp 
+2025-05-19T12:03:37.825Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-231d4ac944esm58198195ad.49 - gsmtp 
+2025-05-19T12:09:32.580Z [31merror[39m: JWT verification error: jwt expired 
+2025-05-19T12:09:50.365Z [31merror[39m: JWT verification error: invalid token 
+2025-05-19T12:09:59.207Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-231d4ed276csm57991555ad.229 - gsmtp 
+2025-05-19T12:20:30.586Z [31merror[39m: requestOTP error....... Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-742a9738f13sm6098413b3a.74 - gsmtp 
+2025-05-19T12:25:10.983Z [31merror[39m: JWT verification error: invalid token 
