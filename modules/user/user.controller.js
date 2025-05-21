@@ -48,6 +48,33 @@ import { checkUserExists } from '../../utils/checkUserExists.js';
 import { uploadProfilePicture } from '../../utils/uploadProfilePicture.js';
 import { blacklistedToken } from '../../utils/tokenManager.js';
 import { checkCityStateCountryValidity } from '../../utils/checkCityStateCountryValidity.js';
+import { verifyUser } from '../../utils/verifyUser.js';
+
+export const authUser = async (req, res) => {
+  const { fullName } = req.query;
+  try {
+    const foundUser = await verifyUser(fullName);
+    if (!foundUser) {
+      return errorResponse(
+        res,
+        new Error(NotFoundErrorMessage),
+        NotFoundErrorMessage,
+        statusCodes.NOT_FOUND,
+      );
+    }
+
+    const token = generateAccessToken(res, foundUser);
+    return successResponse(res, token, statusCodes.SUCCESS);
+  } catch (error) {
+    logger.error(`authUser error.......... ${error.message}`);
+    return errorResponse(
+      res,
+      error,
+      ServerErrorMessage,
+      statusCodes.SERVER_ERROR,
+    );
+  }
+};
 
 export const registerUser = async (req, res) => {
   try {
@@ -389,8 +416,7 @@ export const UserProfile = async (req, res) => {
       throw error;
     }
   } catch (error) {
-    logger.error(`Logout error: ${error.message}`);
-    logger.error(`Update error: ${error.message}`);
+    logger.error(`UserProfile error: ${error.message}`);
     return errorResponse(
       res,
       error,

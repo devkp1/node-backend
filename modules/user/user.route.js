@@ -10,12 +10,14 @@ import {
   userInfo,
   verifyCode,
   logoutUser,
+  authUser,
 } from './user.controller.js';
 import { isAuthenticateUser } from '../../middleware/validateTokenHandler.js';
 import { verifyToken } from '../../middleware/verifyTokenHandler.js';
 import upload from '../../config/imageConfig/multer.config.js';
 const userRoute = express.Router();
 
+userRoute.route('/auth').get(authUser);
 userRoute.route('/register-user').post(registerUser);
 userRoute.route('/signin').post(isAuthenticateUser, loginUser);
 userRoute
