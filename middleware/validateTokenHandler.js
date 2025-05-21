@@ -26,7 +26,7 @@ export const isAuthenticateUser = async (req, res, next) => {
   if (isTokenBlackListed(token)) {
     return errorResponse(
       res,
-      new Error('Authrorizaiton failed! Token expired'),
+      new Error('Authorizaiton failed! Token expired'),
       BlackListedTokenMessage,
       statusCodes.UNAUTHORIZED,
     );
